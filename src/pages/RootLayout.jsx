@@ -19,24 +19,25 @@ function RootLayout() {
           <NavLink to="/" className="root-nav" activeClassName="active">
             Home
           </NavLink>
-          <NavLink
-            to="/bible"
-            className="root-nav"
-            activeClassName="active"
-            end
-          >
-            About Us
-          </NavLink>
-          <NavLink to="/blog" className="root-nav" activeClassName="active" end>
+          <NavLink to="/features" className="root-nav" activeClassName="active" end>
             Features
           </NavLink>
           <NavLink
-            to="/bible-reader"
+            to="/purchasePage"
             className="root-nav"
             activeClassName="active"
             end
           >
             Purchase
+          </NavLink>
+          
+          <NavLink
+            to="/aboutUs"
+            className="root-nav"
+            activeClassName="active"
+            end
+          >
+            About
           </NavLink>
           <NavLink to="/blog" className="root-nav" activeClassName="active" end>
             Contact Us
@@ -61,15 +62,7 @@ function RootLayout() {
               Home
             </NavLink>
             <NavLink
-              to="/bible"
-              className="root-nav-dropDown"
-              onClick={toggleDropdown}
-              end
-            >
-              About Us
-            </NavLink>
-            <NavLink
-              to="/blog"
+              to="/features"
               className="root-nav-dropDown"
               onClick={toggleDropdown}
               end
@@ -77,12 +70,20 @@ function RootLayout() {
               Features
             </NavLink>
             <NavLink
-              to="/bible-reader"
+              to="/purchasePage"
               className="root-nav-dropDown"
               onClick={toggleDropdown}
               end
             >
               Purchase
+            </NavLink>
+            <NavLink
+              to="/aboutUs"
+              className="root-nav-dropDown"
+              onClick={toggleDropdown}
+              end
+            >
+              About
             </NavLink>
             <NavLink
               to="/blog"
@@ -92,6 +93,7 @@ function RootLayout() {
             >
               Contact Us
             </NavLink>
+            
 
             <span className="root-nav-dropDown">Sign Up</span>
           </div>
