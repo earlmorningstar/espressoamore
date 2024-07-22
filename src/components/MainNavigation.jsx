@@ -1,9 +1,5 @@
 import "./MainNavigation.css";
-// import { useNavigate } from "react-router-dom";
 
-// const images = [
-//     { src: "/images/coffee1previewbg.png", alt: "navbar image 1" },
-//   ];
 
 function MainNavigation({ title, children }) {
   return (
@@ -14,7 +10,6 @@ function MainNavigation({ title, children }) {
           <span>{children}</span>
         </div>
         <span>Sign Up</span>
-        {/* <span className="image-container"><img src={images[0].src} alt={images[0].alt} /></span> */}
       </nav>
     </>
   );

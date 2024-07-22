@@ -7,6 +7,7 @@ import DiscoverUsInfo from "./pages/DiscoverUsInfo";
 import About from "./pages/About";
 import Features from "./pages/Features";
 import PurchasePage from "./pages/PurchasePage";
+import PurchaseDetailPage from "./pages/PurchaseDetailPage";
 // import ParticlesBackground from "./components/ParticlesBackground";
 
 const router = createBrowserRouter([
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       {path: "/aboutUs", element: <About />},
       { path: "/features", element: <Features />},
       { path: "/purchasePage", element: <PurchasePage />},
+      {path: "/purchaseDetailPage/:id", element: <PurchaseDetailPage />},
       // { path: "/blog-detail", element: <BlogDetailPage /> },
       // { path: "/bible-reader", element: <BibleReader /> },
     ],

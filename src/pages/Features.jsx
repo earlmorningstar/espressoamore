@@ -47,11 +47,11 @@ const descriptions = [
 ];
 
 function Features() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleBackButton = () => {
-        navigate("/");
-      };
+  const handleBackButton = () => {
+    navigate("/");
+  };
   return (
     <div className="features-parent">
       {images.map((image, index) => (
@@ -63,7 +63,9 @@ function Features() {
           <p>{descriptions[index]}</p>
         </div>
       ))}
-      <button onClick={handleBackButton} className="discover-btn">Back</button>
+      <button onClick={handleBackButton} className="discover-btn">
+        Back
+      </button>
     </div>
   );
 }
