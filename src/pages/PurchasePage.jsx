@@ -75,14 +75,16 @@ function PurchasePage() {
 
   return (
     <div className="purchasePage-parent">
-      <div className="purchasePage-header">
-        <h1>Coffee Menu:</h1>
-        <NavLink className="discover-btn" to="/">
-          <button className="icon-align">
-             Back
-          </button>
+      <div className="navlink-container">
+        <NavLink className="navlinkBtn" to="/">
+          <button className="all-back-btn">Back</button>
         </NavLink>
       </div>
+
+      <div className="purchasePage-header">
+        <h1>Coffee Menu:</h1>
+      </div>
+
       <h3>
         Browse our selection and choose your favorite coffee to add to your cart
         and place an order.
@@ -99,7 +101,7 @@ function PurchasePage() {
                   <h2>{coffee.name}</h2>
                   <IoIosHeartEmpty size={20} />
                 </div>
-                <p>{coffee.description}</p>
+                <p>{coffee.description.substring(0, 60)}{coffee.description.length > 60 ? '...' : ''}</p>
                 <p>Price: ${coffee.price}</p>
                 <span className="prod-btn-holder">
                   <button onClick={() => handleCoffeeClick(coffee, index)}>

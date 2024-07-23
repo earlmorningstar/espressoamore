@@ -49,7 +49,7 @@ function HeroSection() {
     <div className='hero-section'>
       <div className='hero-text'>
         <h2>{textPair.h2}</h2>
-        <h3>"{textPair.h3}"</h3>
+        <h3><i>"{textPair.h3}"</i></h3>
       </div>
       <span className="image-container">
         <img src={images[0].src} alt={images[0].alt} />

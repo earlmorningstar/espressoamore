@@ -17,16 +17,18 @@ function PurchaseDetailPage() {
   }, [coffee]);
 
   if (loading) {
-    return <div className="loader-parent">
-    <ScaleLoader
-      height={35}
-      margin={8}
-      radius={5}
-      speedMultiplier={1}
-      width={8}
-      color="rgb(48, 31, 21)"
-    />
-  </div>;
+    return (
+      <div className="loader-parent">
+        <ScaleLoader
+          height={35}
+          margin={8}
+          radius={5}
+          speedMultiplier={1}
+          width={8}
+          color="rgb(48, 31, 21)"
+        />
+      </div>
+    );
   }
 
   if (!coffee) {
@@ -35,11 +37,14 @@ function PurchaseDetailPage() {
 
   return (
     <div className="purchaseDetailPage-parent">
+      <div className="navlink-container">
+        <NavLink className="navlinkBtn" to="/purchasePage">
+          <button className="all-back-btn">Back</button>
+        </NavLink>
+      </div>
+
       <div className="purchaseDetail-header">
         <h1>{coffee.name}</h1>
-        <NavLink className="discover-btn" to="/purchasePage">
-          <button className="icon-align">Back</button>
-        </NavLink>
       </div>
       <div className="purchaseDetail-content">
         <div className="purchaseDetail-content-sideA">
@@ -78,10 +83,13 @@ function PurchaseDetailPage() {
             </button>
           </div>
 
-          <span><i> Explore the rich details of your selected coffee. Discover its
-            unique flavor profile, grind options, and origin. Add it to your
-            cart to enjoy a premium coffee experience.</i>
-           
+          <span>
+            <i>
+              {" "}
+              Explore the rich details of your selected coffee. Discover its
+              unique flavor profile, grind options, and origin. Add it to your
+              cart to enjoy a premium coffee experience.
+            </i>
           </span>
         </div>
       </div>
