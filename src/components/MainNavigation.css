@@ -13,6 +13,9 @@
 }
 
 .navbar > p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
   color: rgb(205, 196, 189);
   font-family: "Allan", serif;
@@ -31,14 +34,19 @@
     border-radius: 7px;
 }
 
-.navbar > span {
+.nav-btn-holder {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn-holder > span {
   cursor: pointer;
   display: flex;
   align-items: center;
   color: rgb(205, 196, 189);
   border: 1.5px solid rgb(205, 196, 189);
-  padding: 8px 12px;
-  border-radius: 20px;
+  padding: 8px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   font-family: "Manrope", sans-serif;
@@ -47,12 +55,12 @@
 
   @media screen and (max-width: 1000px) {
     .navbar {
-        padding: 2rem 3rem 1rem 3rem;
+        padding: 2rem 2rem 1rem 2rem;
   }
 }
 
   @media screen and (max-width: 950px) {
-    .navbar > span {
+    .nav-btn-holder  {
         display: none;
     }
 }

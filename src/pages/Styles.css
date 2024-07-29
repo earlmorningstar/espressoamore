@@ -177,7 +177,7 @@
 
 .hero-section {
   background-color: rgb(48, 31, 21);
-  padding: 4rem 3rem 5rem 5rem;
+  padding: 4rem 0rem 5rem 5rem;
   display: flex;
   width: 100%;
 }
@@ -197,9 +197,9 @@
 .image-container {
   width: 50%;
   height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
   overflow: hidden;
 }
 
@@ -677,6 +677,223 @@
   margin-top: 20px;
 }
 
+/* TermsOfUse Section---- */
+
+.termsOfUse-parent {
+  background-color: #CDC4BD;
+  color: rgb(48, 31, 21);
+  padding: 3rem 5rem;
+}
+
+.termsOfUse-parent > h2 {
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.termsOfUse-parent > h3 {
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 15px;
+}
+
+.terms-holder{
+display: flex;
+flex-direction: column;
+gap: 25px;
+}
+
+.termsOfUse-parent >h4 {
+  font-size: 18px;
+  font-family: "Lato", sans-serif;
+  margin: 40px 0 40px 40px;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.each-terms-holder {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.each-terms-holder > h3 {
+  font-family: "Lato", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.each-terms-holder > h4 {
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.mt-pg > p {
+  margin-top: 8px;
+}
+
+.mt-pg {
+  margin-bottom: 5px;
+}
+
+/* SignUp Section--- */
+
+.SignUp-parent{
+  background: linear-gradient(135deg, rgb(48, 31, 21), rgb(219, 188, 160));
+  color: rgb(205, 196, 189);
+  padding: 3rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#SignUp-id {
+  height: 100vh;
+  padding: 10rem 5rem 3rem 5rem;
+}
+
+.productName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgb(205, 196, 189);
+  font-family: "Allan", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 35px;
+  margin-bottom: 40px;
+}
+
+.SignUp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: rgb(205, 196, 189);
+  margin: 15px 0;
+}
+
+.signUp-welcome-text > h1 {
+  font-size: 40px;
+  font-family: "Raleway", sans-serif;
+}
+
+.signUp-info-holder > p {
+  margin: 10px 0;
+  font-size: 18px;
+  font-family: "Raleway", sans-serif;
+}
+
+.signUp-info-holder > h2 {
+  margin: 10px 0;
+  font-size: 38px;
+  font-family: "Raleway", sans-serif;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+}
+
+#input-group-id {
+  display: flex;
+  gap: 10px;
+  font-family: "Raleway", sans-serif;
+}
+
+#input-group-id > label{
+  font-size: 15px;
+}
+
+.input-group > label {
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  color: white;
+}
+
+.input-group > input {
+  padding: 10px;
+  background: transparent;
+  border: 1.5px solid rgb(48, 31, 21);
+  border-radius: 8px;
+  outline: none;
+  color: #ffffff;
+}
+
+.link-style {
+  cursor: pointer;
+  color: rgb(38, 75, 143);
+  font-weight: 700;
+}
+
+.validation-error {
+  float: none;
+  width: auto;
+  padding: 0;
+  line-height: 18px;
+  white-space: normal;
+  font-weight: normal;
+  color: red;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+.login-button {
+  cursor: pointer;
+  padding: 10px 25px;
+  background-color: rgb(48, 31, 21);
+  color: rgb(219, 188, 160);
+  border: 1px solid rgb(48, 31, 21);
+  transition: 0.4s ease-in-out;
+  border-radius: 4px;
+}
+
+/* WelcomePage Section--- */
+
+.welcome-image-container {
+  width: 100%;
+  height: 40vh;
+}
+
+.welcome-image-container > img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.welcomePage-parent {
+  background: linear-gradient(135deg, rgb(48, 31, 21), rgb(219, 188, 160));
+  color: rgb(205, 196, 189);
+  padding: 3rem 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcomePage-parent > p {
+  font-family: "Raleway", sans-serif;
+  color: #d8d6d6;
+text-align: center;
+font-size: 18px;
+line-height: 25px;
+}
+
+.welcomePage-parent > div {
+  display: flex;
+ flex-direction: column;
+ gap: 15px;
+ margin-top: 40px;
+}
+
+
+
 /* Media Queries--- */
 
 @media screen and (max-width: 1250px) {
@@ -699,6 +916,10 @@
 .chooseCoffee-video-container {
     width: 100%;
     margin: 0 auto; 
+  }
+
+  .welcomePage-parent {
+    padding: 3rem 20rem;
   }
 }
 
@@ -750,6 +971,10 @@
     grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 15px;
 }
+
+.welcomePage-parent {
+  padding: 3rem 12rem;
+}
   
 }
 
@@ -765,6 +990,9 @@
   }
   .purchaseDetail-content {
     gap: 30px;
+  }
+  .welcomePage-parent {
+    padding: 3rem 8rem;
   }
   
 }
@@ -832,6 +1060,22 @@
   .chooseCoffee-parent {
     padding: 3rem 2rem;
 }
+
+.termsOfUse-parent {
+  padding: 3rem 2rem;
+}
+
+.SignUp-parent{
+  padding: 3rem 2rem;
+}
+
+#SignUp-id {
+  padding: 10rem 2rem 3rem 2rem;
+}
+
+.welcomePage-parent {
+  padding: 3rem 4rem;
+}
 }
 
 @media screen and (max-width: 650px) {
@@ -863,6 +1107,19 @@
 .featuredProduct-container {
     padding: 3rem 1rem;
 }
+.termsOfUse-parent {
+  padding: 3rem 1rem;
+}
+.SignUp-parent{
+  padding: 3rem 1rem;
+}
+#SignUp-id {
+  padding: 10rem 1rem 3rem 1rem;
+}
+
+.welcomePage-parent {
+  padding: 3rem 2rem;
+}
 }
 
 @media screen and (max-width: 550px) {
@@ -873,5 +1130,9 @@
   .hero-text > h3 {
     font-size: 11px;
     font-weight: 400;
+  }
+
+  .welcomePage-parent {
+    padding: 3rem 1rem;
   }
 }

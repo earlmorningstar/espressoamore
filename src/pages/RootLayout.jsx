@@ -3,6 +3,7 @@ import { Outlet, NavLink } from "react-router-dom";
 import MainNavigation from "../components/MainNavigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import "./Styles.css";
 
 function RootLayout() {
@@ -10,6 +11,18 @@ function RootLayout() {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogInPage = () => {
+    toggleDropdown(); 
+    navigate("/loginPage");
+  };
+
+  const handleSignUpPage = () => {
+    toggleDropdown();
+    navigate("/SignUpPage");
   };
 
   return (
@@ -57,6 +70,7 @@ function RootLayout() {
             <NavLink
               to="/"
               className="root-nav-dropDown"
+              id="root-nav-id"
               onClick={toggleDropdown}
             >
               Home
@@ -64,6 +78,7 @@ function RootLayout() {
             <NavLink
               to="/features"
               className="root-nav-dropDown"
+              id="root-nav-id"
               onClick={toggleDropdown}
               end
             >
@@ -72,6 +87,7 @@ function RootLayout() {
             <NavLink
               to="/purchasePage"
               className="root-nav-dropDown"
+              id="root-nav-id"
               onClick={toggleDropdown}
               end
             >
@@ -80,6 +96,7 @@ function RootLayout() {
             <NavLink
               to="/aboutUs"
               className="root-nav-dropDown"
+              id="root-nav-id"
               onClick={toggleDropdown}
               end
             >
@@ -88,14 +105,14 @@ function RootLayout() {
             <NavLink
               to="/blog"
               className="root-nav-dropDown"
+              id="root-nav-id"
               onClick={toggleDropdown}
               end
             >
               Contact Us
             </NavLink>
-            
-
-            <span className="root-nav-dropDown">Sign Up</span>
+            <span onClick={handleLogInPage} className="root-nav-dropDown">Log In</span>
+            <span onClick={handleSignUpPage} className="root-nav-dropDown">Sign Up</span>
           </div>
         </div>
       )}
