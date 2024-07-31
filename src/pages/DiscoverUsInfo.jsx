@@ -5,7 +5,7 @@ function DiscoverUsInfo() {
     const navigate = useNavigate();
 
     const handleBackPage = () => {
-        navigate("/");
+        navigate("/homePage");
       };
   return (
     <div id="discoverInfo-id" className="readMore-textParent">

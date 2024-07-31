@@ -50,7 +50,7 @@ function Features() {
   const navigate = useNavigate();
 
   const handleBackButton = () => {
-    navigate("/");
+    navigate("/homePage");
   };
   return (
     <div className="features-parent">

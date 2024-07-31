@@ -9,7 +9,7 @@ function ErrorPage() {
       <main className="error-page-main">
         <h1>An error occured!!</h1>
         <p>Could not find this page. Please, come back soon.</p>
-        <NavLink className="error-back-btn-link" to=".." relative="path">
+        <NavLink className="error-back-btn-link" to="/homePage" relative="path">
           <button className="btn-style">Back to homepage</button>
         </NavLink>
       </main>

@@ -13,6 +13,16 @@
   border-radius: 7px;
 }
 
+.root-nav.hide,
+.root-nav-dropDown.hide {
+  display: none !important;
+}
+
+.root-nav.show,
+.root-nav-dropDown.show {
+  display: flex !important;
+}
+
 .root-nav {
   font-size: 16px;
   font-family: "Manrope", sans-serif;
@@ -197,9 +207,6 @@
 .image-container {
   width: 50%;
   height: auto;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   overflow: hidden;
 }
 
@@ -219,7 +226,7 @@
   gap: 15px;
   align-items: start;
   justify-content: center;
-  padding: 0 0 0 4rem;
+  padding: 0 0 0 1rem;
 }
 
 .hero-text > h2 {
@@ -430,15 +437,6 @@
   padding: 8px;
   text-decoration: none;
 }
-
-/* .icon-align {
-  display: flex;
-  align-items: center;
-  background-color: rgb(48, 31, 21);
-  color: rgb(219, 188, 160);
-  border: none;
-  cursor: pointer;
-} */
 
 .readMore-textParent > h4 {
   font-size: 1.5rem;
@@ -750,7 +748,7 @@ gap: 25px;
 
 #SignUp-id {
   height: 100vh;
-  padding: 10rem 5rem 3rem 5rem;
+  padding: 6rem 5rem 3rem 5rem;
 }
 
 .productName {
@@ -928,6 +926,10 @@ line-height: 25px;
     display: none;
   }
 
+  .root-nav.show {
+    display: flex !important;
+  }
+
   .hamburger-menu {
     display: block;
   }
@@ -1070,7 +1072,7 @@ line-height: 25px;
 }
 
 #SignUp-id {
-  padding: 10rem 2rem 3rem 2rem;
+  padding: 6rem 2rem 3rem 2rem;
 }
 
 .welcomePage-parent {
@@ -1114,7 +1116,7 @@ line-height: 25px;
   padding: 3rem 1rem;
 }
 #SignUp-id {
-  padding: 10rem 1rem 3rem 1rem;
+  padding: 6rem 1rem 3rem 1rem;
 }
 
 .welcomePage-parent {

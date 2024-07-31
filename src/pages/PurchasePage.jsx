@@ -76,7 +76,7 @@ function PurchasePage() {
   return (
     <div className="purchasePage-parent">
       <div className="navlink-container">
-        <NavLink className="navlinkBtn" to="/">
+        <NavLink className="navlinkBtn" to="/homePage">
           <button className="all-back-btn">Back</button>
         </NavLink>
       </div>

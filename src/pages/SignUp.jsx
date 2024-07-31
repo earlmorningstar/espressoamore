@@ -2,18 +2,16 @@ import { useState } from "react";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-
+import { readUserData, saveUserData } from "../dataUtils";
 import "./Styles.css";
 
 function SignUp() {
   const navigate = useNavigate();
+  const handleTermsOfUsePage = () => navigate("/termsOfUsePage");
+  const handlePrivacyPolicyPage = () => navigate("/privacyPolicyPage");
 
-  const handleTermsOfUsePage = () => {
-    navigate("/termsOfUsePage");
-  };
-
-  const handlePrivacyPolicyPage = () => {
-    navigate("/privacyPolicyPage");
+  const handleLogInPage = () => {
+    navigate("/loginPage");
   };
 
   const [formData, setFormData] = useState({
@@ -113,7 +111,16 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form Data:", formData);
+      const existingUsers = readUserData();
+      const newUser = {
+        email: formData.email,
+        username: formData.username,
+        age: formData.age,
+        password: formData.password,
+      };
+      saveUserData([...existingUsers, newUser]);
+      alert("Account created successfully");
+      navigate("/loginPage");
     } else {
       console.log("Validation Errors:", errors);
     }
@@ -252,6 +259,9 @@ function SignUp() {
 
           <button className="login-button" type="submit">
             Create Account
+          </button>
+          <button onClick={handleLogInPage} className="login-button">
+            Log In
           </button>
         </form>
       </div>

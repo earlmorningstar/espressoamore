@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
+import { readUserData } from "../dataUtils";
 import "./Styles.css";
 
-function LoginPage() {
+function LogIn() {
+  const navigate = useNavigate();
+  const { handleLoginSuccess } = useOutletContext();
+  const [errors, setErrors] = useState({});
+
+  const handleSignUpPage = () => {
+    navigate("/SignUpPage");
+  };
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +40,12 @@ function LoginPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        newErrors[key] = "This field is required.";
-      }
-    });
+    if (!formData.username) {
+      newErrors.username = "This field is required.";
+    }
+    if (!formData.password) {
+      newErrors.password = "This field is required.";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -45,10 +53,19 @@ function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form Data:", formData);
-      // Handle successful login logic here
-    } else {
-      console.log("Validation Errors:", errors);
+      const existingUsers = readUserData();
+      const user = existingUsers.find(
+        (user) =>
+          user.username === formData.username &&
+          user.password === formData.password
+      );
+      if (user) {
+        handleLoginSuccess();
+        alert("Login Successful");
+        navigate("/homePage");
+      } else {
+        alert("Invalid username or password");
+      }
     }
   };
 
@@ -104,10 +121,13 @@ function LoginPage() {
           <button className="login-button" type="submit">
             Log In
           </button>
+          <button onClick={handleSignUpPage} className="login-button">
+            Create an Account
+          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default LogIn;

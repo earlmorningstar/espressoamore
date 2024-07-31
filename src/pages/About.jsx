@@ -5,7 +5,7 @@ function About() {
     const navigate = useNavigate();
 
     const handleBackButton = () => {
-        navigate("/");
+        navigate("/homePage");
       };
   return (
     <div id="discoverInfo-id" className="readMore-textParent">

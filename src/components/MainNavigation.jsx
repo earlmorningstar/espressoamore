@@ -1,19 +1,7 @@
 import "./MainNavigation.css";
 import { GiCoffeeCup } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
 
-function MainNavigation({ title, children }) {
-
-  const navigate = useNavigate();
-
-  const handleLogInPage = () => {
-    navigate("/loginPage");
-  };
-
-  const handleSignUpPage = () => {
-    navigate("/SignUpPage");
-  };
-
+function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
   return (
     <>
       <nav className="navbar">
@@ -24,10 +12,11 @@ function MainNavigation({ title, children }) {
         <div className="navDiv">
           <span>{children}</span>
         </div>
-        <section className="nav-btn-holder">
-          <span onClick={handleLogInPage}>Log In</span>
-          <span onClick={handleSignUpPage}>Sign Up</span>
-        </section>
+        {isLoggedIn && (
+          <section className="nav-btn-holder">
+            <span onClick={handleLogout}>Logout</span>
+          </section>
+        )}
       </nav>
     </>
   );
