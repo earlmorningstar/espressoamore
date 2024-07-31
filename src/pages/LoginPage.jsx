@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { readUserData } from "../dataUtils";
+import { FadeLoader } from "react-spinners";
 import "./Styles.css";
 
-function LogIn() {
+function LoginPage() {
   const navigate = useNavigate();
   const { handleLoginSuccess } = useOutletContext();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 1000);
+
+    return () => clearTimeout(timer); 
+  }, []);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -68,6 +78,20 @@ function LogIn() {
       }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loader-parent-ii">
+        <FadeLoader
+          height={30}
+          margin={8}
+          radius={5}
+          speedMultiplier={2}
+          color="rgb(48, 31, 21)"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="SignUp-parent" id="SignUp-id">
@@ -130,4 +154,4 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+export default LoginPage;

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { readUserData, saveUserData } from "../dataUtils";
+import { FadeLoader } from "react-spinners";
 import "./Styles.css";
 
 function SignUp() {
@@ -13,6 +14,16 @@ function SignUp() {
   const handleLogInPage = () => {
     navigate("/loginPage");
   };
+
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 1000);
+
+    return () => clearTimeout(timer); 
+  }, []);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -125,6 +136,20 @@ function SignUp() {
       console.log("Validation Errors:", errors);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="loader-parent-ii">
+        <FadeLoader
+          height={30}
+          margin={8}
+          radius={5}
+          speedMultiplier={2}
+          color="rgb(48, 31, 21)"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="SignUp-parent">
