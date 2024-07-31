@@ -49,21 +49,52 @@ function RootLayout() {
 
   return (
     <>
-      <MainNavigation title="EmpressoAmore" isLoggedIn={isLoggedIn} handleLogout={handleLogout}>
-        <div  className={`nav-links ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id">
-          <NavLink to="/homePage" className={`root-nav ${isLoggedIn ? "show" : "hide"}`} activeClassName="active">
+      <MainNavigation
+        title="EmpressoAmore"
+        isLoggedIn={isLoggedIn}
+        handleLogout={handleLogout}
+      >
+        <div
+          className={`nav-links ${isLoggedIn ? "show" : "hide"}`}
+          id="root-nav-id"
+        >
+          <NavLink
+            to="/homePage"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+          >
             Home
           </NavLink>
-          <NavLink to="/features" className={`root-nav ${isLoggedIn ? "show" : "hide"}`} activeClassName="active" end>
+          <NavLink
+            to="/features"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+            end
+          >
             Features
           </NavLink>
-          <NavLink to="/purchasePage" className={`root-nav ${isLoggedIn ? "show" : "hide"}`} activeClassName="active" end>
+          <NavLink
+            to="/purchasePage"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+            end
+          >
             Purchase
           </NavLink>
-          <NavLink to="/aboutUs" className={`root-nav ${isLoggedIn ? "show" : "hide"}`} activeClassName="active" end>
+          <NavLink
+            to="/aboutUs"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+            end
+          >
             About
           </NavLink>
-          <NavLink to="/blog" className={`root-nav ${isLoggedIn ? "show" : "hide"}`} activeClassName="active" end>
+          <NavLink
+            to="/blog"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+            end
+          >
             Contact Us
           </NavLink>
         </div>
@@ -78,19 +109,48 @@ function RootLayout() {
       {isDropdownOpen && (
         <div className="dropdown-menu">
           <div className="nav-link-dropDown">
-            <NavLink to="/homePage" className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id" onClick={toggleDropdown}>
+            <NavLink
+              to="/homePage"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+            >
               Home
             </NavLink>
-            <NavLink to="/features" className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id" onClick={toggleDropdown} end>
+            <NavLink
+              to="/features"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+              end
+            >
               Features
             </NavLink>
-            <NavLink to="/purchasePage" className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id" onClick={toggleDropdown} end>
+            <NavLink
+              to="/purchasePage"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+              end
+            >
               Purchase
             </NavLink>
-            <NavLink to="/aboutUs" className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id" onClick={toggleDropdown} end>
+            <NavLink
+              to="/aboutUs"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+              end
+            >
               About
             </NavLink>
-            <NavLink to="/blog" className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`} id="root-nav-id" onClick={toggleDropdown} end>
+            <NavLink
+              to="/blog"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+              end
+            >
               Contact Us
             </NavLink>
             <span onClick={handleLogInPage} className="root-nav-dropDown">
@@ -100,7 +160,10 @@ function RootLayout() {
               Sign Up
             </span>
             {isLoggedIn && (
-              <span onClick={handleDropDownLogout} className="root-nav-dropDown">
+              <span
+                onClick={handleDropDownLogout}
+                className="root-nav-dropDown"
+              >
                 Logout
               </span>
             )}

@@ -101,7 +101,10 @@ function PurchasePage() {
                   <h2>{coffee.name}</h2>
                   <IoIosHeartEmpty size={20} />
                 </div>
-                <p>{coffee.description.substring(0, 60)}{coffee.description.length > 60 ? '...' : ''}</p>
+                <p>
+                  {coffee.description.substring(0, 60)}
+                  {coffee.description.length > 60 ? "..." : ""}
+                </p>
                 <p>Price: ${coffee.price}</p>
                 <span className="prod-btn-holder">
                   <button onClick={() => handleCoffeeClick(coffee, index)}>

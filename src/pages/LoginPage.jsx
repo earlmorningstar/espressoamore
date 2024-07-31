@@ -4,6 +4,12 @@ import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { readUserData } from "../dataUtils";
 import { FadeLoader } from "react-spinners";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
 import "./Styles.css";
 
 function LoginPage() {
@@ -11,6 +17,8 @@ function LoginPage() {
   const { handleLoginSuccess } = useOutletContext();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
@@ -18,10 +26,10 @@ function LoginPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); 
+      setLoading(false);
     }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   const [formData, setFormData] = useState({
@@ -71,10 +79,16 @@ function LoginPage() {
       );
       if (user) {
         handleLoginSuccess();
-        alert("Login Successful");
-        navigate("/homePage");
+        setAlertOpen(true);
+        setTimeout(() => {
+          setAlertOpen(false);
+          navigate("/homePage");
+        }, 1000);
       } else {
-        alert("Invalid username or password");
+        setErrorAlertOpen(true);
+        setTimeout(() => {
+          setErrorAlertOpen(false);
+        }, 3000);
       }
     }
   };
@@ -145,6 +159,37 @@ function LoginPage() {
           <button className="login-button" type="submit">
             Log In
           </button>
+
+          <div>
+            <Box sx={{ width: "100%" }}>
+              <Collapse in={alertOpen}>
+                <Alert
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setAlertOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  Login Successful...
+                </Alert>
+              </Collapse>
+              <Collapse in={errorAlertOpen}>
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  Invalid username or password
+                </Alert>
+              </Collapse>
+            </Box>
+          </div>
+
           <button onClick={handleSignUpPage} className="login-button">
             Create an Account
           </button>

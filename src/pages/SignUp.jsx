@@ -4,26 +4,20 @@ import { LuAsterisk } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { readUserData, saveUserData } from "../dataUtils";
 import { FadeLoader } from "react-spinners";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
 import "./Styles.css";
 
 function SignUp() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState({});
+  const [alertOpen, setAlertOpen] = useState(false);
   const handleTermsOfUsePage = () => navigate("/termsOfUsePage");
   const handlePrivacyPolicyPage = () => navigate("/privacyPolicyPage");
-
-  const handleLogInPage = () => {
-    navigate("/loginPage");
-  };
-
-  const [loading, setLoading] = useState(true); 
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false); 
-    }, 1000);
-
-    return () => clearTimeout(timer); 
-  }, []);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,16 +27,6 @@ function SignUp() {
     confirmPassword: "",
     termsAndPolicy: false,
   });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
 
   const validateField = (name, value) => {
     let error = "";
@@ -119,6 +103,26 @@ function SignUp() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleLogInPage = () => {
+    navigate("/loginPage");
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -130,8 +134,11 @@ function SignUp() {
         password: formData.password,
       };
       saveUserData([...existingUsers, newUser]);
-      alert("Account created successfully");
-      navigate("/loginPage");
+      setAlertOpen(true);
+      setTimeout(() => {
+        setAlertOpen(false);
+        navigate("/loginPage");
+      }, 3000);
     } else {
       console.log("Validation Errors:", errors);
     }
@@ -285,6 +292,29 @@ function SignUp() {
           <button className="login-button" type="submit">
             Create Account
           </button>
+          <div>
+            <Box sx={{ width: "100%" }}>
+              <Collapse in={alertOpen}>
+                <Alert
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setAlertOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  Congratulations!!! Account created successfully!!
+                </Alert>
+              </Collapse>
+            </Box>
+          </div>
           <button onClick={handleLogInPage} className="login-button">
             Log In
           </button>
