@@ -29,6 +29,7 @@ const imageList = [
 function FeaturedProducts() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [coffeeData, setCoffeeData] = useState([]);
+  const [error, setError] = useState(false);
 
   const fetchCoffeeData = async () => {
     try {
@@ -37,6 +38,7 @@ function FeaturedProducts() {
       setCoffeeData(data);
     } catch (error) {
       console.error("Error fetching coffee data:", error);
+      setError(true);
     }
   };
 
@@ -86,34 +88,44 @@ function FeaturedProducts() {
         for You.
       </h3>
 
-      <div className="featured-products-list">
-        {featuredProducts.map((coffee, index) => (
-          <div key={coffee.id}>
-            <div className="ft-prod-img">
-              <img src={imageList[index].src} alt={coffee.name} width="200" />
-            </div>
+      {error ? (
+        <div className="err-msg">
+          <span>Sorry, we are experiencing issues loading our coffee selection.</span>
+          <span>Please try again later. We apologize for any inconvenience and appreciate your patience.</span>
+        </div>
+      ) : (
+        <div className="featured-products-list">
+          {featuredProducts.map((coffee, index) => (
+            <div key={coffee.id}>
+              <div className="ft-prod-img">
+                <img src={imageList[index].src} alt={coffee.name} width="200" />
+              </div>
 
-            <div className="featured-prod-info">
-              <h2>{coffee.name}</h2>
-              <p>{coffee.description.substring(0, 70)}{coffee.description.length > 70 ? '...' : ''}</p>
-              <p>Price: ${coffee.price}</p>
-              <span className="prod-btn-holder">
-                <NavLink
-                  className='ft-navLink'
-                  to={`/purchaseDetailPage/${coffee.id}`}
-                  state={{ coffee, image: imageList[index] }}
-                >
-                  <button className="ft-view-btn ">View Product</button>
-                </NavLink>
-                <button>
-                  <PiShoppingCartThin size={18} />
-                  Add to Cart
-                </button>
-              </span>
+              <div className="featured-prod-info">
+                <h2>{coffee.name}</h2>
+                <p>
+                  {coffee.description.substring(0, 70)}
+                  {coffee.description.length > 70 ? "..." : ""}
+                </p>
+                <p>Price: <b>${coffee.price}</b> </p>
+                <span className="prod-btn-holder">
+                  <NavLink
+                    className="ft-navLink"
+                    to={`/purchaseDetailPage/${coffee.id}`}
+                    state={{ coffee, image: imageList[index] }}
+                  >
+                    <button className="ft-view-btn ">View Product</button>
+                  </NavLink>
+                  <button>
+                    <PiShoppingCartThin size={18} />
+                    Add to Cart
+                  </button>
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

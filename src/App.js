@@ -12,6 +12,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LoginPage from "./pages/LoginPage";
 import WelcomePage from "./pages/WelcomePage";
+import { ScrollProvider } from "./store/ScrollContext";
 
 const router = createBrowserRouter([
   {
@@ -36,9 +37,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <RouterProvider router={router}>
+      <ScrollProvider>
+        <RootLayout />
+      </ScrollProvider>
+    </RouterProvider>
   );
 }
 

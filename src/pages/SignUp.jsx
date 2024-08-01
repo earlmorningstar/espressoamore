@@ -148,7 +148,7 @@ function SignUp() {
     return (
       <div className="loader-parent-ii">
         <FadeLoader
-          height={30}
+          height={25}
           margin={8}
           radius={5}
           speedMultiplier={2}

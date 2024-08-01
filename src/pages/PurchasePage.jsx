@@ -31,6 +31,7 @@ const imageList = [
 function PurchasePage() {
   const [coffeeData, setCoffeeData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const fetchCoffeeData = async () => {
@@ -43,6 +44,7 @@ function PurchasePage() {
       setCoffeeData(customCoffeeData);
     } catch (error) {
       console.error("Error fetching coffee data:", error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -56,13 +58,23 @@ function PurchasePage() {
     return (
       <div className="loader-parent">
         <ScaleLoader
-          height={35}
+          height={30}
           margin={8}
           radius={5}
           speedMultiplier={1}
-          width={8}
           color="rgb(48, 31, 21)"
         />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-page-main" id="err-msg">
+        <span>Sorry, we are experiencing issues loading our coffee selection.</span>
+        <span>Please
+        try again later. We apologize for any inconvenience and appreciate your
+        patience.</span>
       </div>
     );
   }
@@ -105,7 +117,7 @@ function PurchasePage() {
                   {coffee.description.substring(0, 60)}
                   {coffee.description.length > 60 ? "..." : ""}
                 </p>
-                <p>Price: ${coffee.price}</p>
+                <p>Price: <b>${coffee.price}</b> </p>
                 <span className="prod-btn-holder">
                   <button onClick={() => handleCoffeeClick(coffee, index)}>
                     View Product

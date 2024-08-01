@@ -153,12 +153,24 @@ function RootLayout() {
             >
               Contact Us
             </NavLink>
-            <span onClick={handleLogInPage} className="root-nav-dropDown">
-              Log In
-            </span>
-            <span onClick={handleSignUpPage} className="root-nav-dropDown">
-              Sign Up
-            </span>
+            {!isLoggedIn && (
+              <>
+                <span
+                  onClick={handleLogInPage}
+                  id="hideBtnOnIsLoginTrue"
+                  className="root-nav-dropDown"
+                >
+                  Log In
+                </span>
+                <span
+                  onClick={handleSignUpPage}
+                  id="hideBtnOnIsLoginTrue"
+                  className="root-nav-dropDown"
+                >
+                  Sign Up
+                </span>
+              </>
+            )}
             {isLoggedIn && (
               <span
                 onClick={handleDropDownLogout}
