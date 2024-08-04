@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { ScaleLoader } from "react-spinners";
+import { currencyFormatter } from "../Util/formatter";
 import "./Styles.css";
 
 const imageList = [
@@ -117,7 +118,7 @@ function PurchasePage() {
                   {coffee.description.substring(0, 60)}
                   {coffee.description.length > 60 ? "..." : ""}
                 </p>
-                <p>Price: <b>${coffee.price}</b> </p>
+                <p>Price: <b>{currencyFormatter.format(coffee.price)}</b></p>
                 <span className="prod-btn-holder">
                   <button onClick={() => handleCoffeeClick(coffee, index)}>
                     View Product

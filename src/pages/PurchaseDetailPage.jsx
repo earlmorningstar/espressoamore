@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { ScaleLoader } from "react-spinners";
+import { currencyFormatter } from "../Util/formatter";
+
 
 function PurchaseDetailPage() {
   const location = useLocation();
@@ -53,7 +55,7 @@ function PurchaseDetailPage() {
         </div>
         <div className="purchaseDetail-info">
           <p>
-            <b>Price: $</b> {coffee.price}
+            <b>Price: </b> {currencyFormatter.format(coffee.price)}
           </p>
           <p>
             <b>Region:</b> {coffee.region}

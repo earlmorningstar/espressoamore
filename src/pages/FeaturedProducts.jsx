@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
+import { currencyFormatter } from "../Util/formatter";
 import "./Styles.css";
 
 const imageList = [
@@ -107,7 +108,7 @@ function FeaturedProducts() {
                   {coffee.description.substring(0, 70)}
                   {coffee.description.length > 70 ? "..." : ""}
                 </p>
-                <p>Price: <b>${coffee.price}</b> </p>
+                <p>Price: <b>{currencyFormatter.format(coffee.price)}</b></p>
                 <span className="prod-btn-holder">
                   <NavLink
                     className="ft-navLink"

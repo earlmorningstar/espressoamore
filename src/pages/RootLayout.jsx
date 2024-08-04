@@ -4,6 +4,9 @@ import MainNavigation from "../components/MainNavigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
 import "./Styles.css";
+import { FaHeart } from "react-icons/fa";
+import { PiShoppingCartFill } from "react-icons/pi";
+import { CgProfile } from "react-icons/cg";
 
 function RootLayout() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -98,6 +101,7 @@ function RootLayout() {
             Contact Us
           </NavLink>
         </div>
+
         <div className="hamburger-menu" onClick={toggleDropdown}>
           {isDropdownOpen ? (
             <RiCloseLargeFill size={32} color="rgb(205, 196, 189)" />
@@ -172,12 +176,28 @@ function RootLayout() {
               </>
             )}
             {isLoggedIn && (
-              <span
-                onClick={handleDropDownLogout}
-                className="root-nav-dropDown"
-              >
-                Logout
-              </span>
+              <>
+                <div className="root-nav-cart-profile-icon-parent">
+                <NavLink to="/favoritedItemsPage" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
+                   Favorites <span className="cart-num"><FaHeart size={20}/> <p>(17)</p></span>
+                  </NavLink>
+
+                  <NavLink to="/cartItemsPage" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
+                   My Cart <span className="cart-num"><PiShoppingCartFill color="rgb(48, 31, 21)" size={25} /> <p>(17)</p></span>
+                  </NavLink>
+
+                  <NavLink to="/benny" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
+                    My Profile <CgProfile color="rgb(48, 31, 21)" size={25} />
+                  </NavLink>
+                </div>
+
+                <span
+                  onClick={handleDropDownLogout}
+                  className="root-nav-dropDown"
+                >
+                  Logout
+                </span>
+              </>
             )}
           </div>
         </div>

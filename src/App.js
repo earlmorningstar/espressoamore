@@ -1,4 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { UserProgressContextProvider } from "./store/UserProgressContext";
+import { CartContextProvider } from "./store/CartContext";
+import { LikedItemsContextProvider } from "./store/LikedItemsContext";
+
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
@@ -13,6 +17,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LoginPage from "./pages/LoginPage";
 import WelcomePage from "./pages/WelcomePage";
 import { ScrollProvider } from "./store/ScrollContext";
+import FavoritedItems from "./components/Favorites/FavoritedItems";
+import CartItem from "./components/Cart/CartItem";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +37,8 @@ const router = createBrowserRouter([
       { path: "/loginPage", element: <LoginPage /> },
       { path: "/termsOfUsePage", element: <TermsOfUse /> },
       { path: "/privacyPolicyPage", element: <PrivacyPolicy /> },
+      { path: "/favoritedItemsPage", element: <FavoritedItems /> },
+      { path: "/cartItemsPage", element: <CartItem /> },
     ],
   },
 ]);
@@ -39,7 +47,13 @@ function App() {
   return (
     <RouterProvider router={router}>
       <ScrollProvider>
-        <RootLayout />
+        <UserProgressContextProvider>
+          <LikedItemsContextProvider>
+            <CartContextProvider>
+              <RootLayout />
+            </CartContextProvider>
+          </LikedItemsContextProvider>
+        </UserProgressContextProvider>
       </ScrollProvider>
     </RouterProvider>
   );
