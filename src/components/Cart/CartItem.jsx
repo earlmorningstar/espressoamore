@@ -32,8 +32,9 @@ function CartItem() {
             {cartCtx.items.map((item) => (
               <li className="cart-list" key={item.id}>
                 <div>
-                  <h3>{item.name}:</h3> <h4> Qty: x{item.quantity}</h4>
+                  <h3>{item.name}:</h3> 
                 </div>
+                  <h4> Qty: x{item.quantity}</h4>
 
                 <span onClick={() => cartCtx.addItem(item)}>
                   <IoMdAdd size={15} color="rgb(219, 188, 160)" />

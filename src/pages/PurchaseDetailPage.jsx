@@ -41,6 +41,10 @@ function PurchaseDetailPage() {
     return <div>Coffee not found</div>; //Work on this!
   }
 
+  const isItemInCart = (coffeeId) => {
+    return cartCtx.items.some((item) => item.id === coffeeId);
+  };
+
   return (
     <div className="purchaseDetailPage-parent">
       <div className="navlink-container">
@@ -83,9 +87,13 @@ function PurchaseDetailPage() {
             ))}
           </ul>
           <div className="prod-btn-holder">
-            <button onClick={() => cartCtx.addItem(coffee)}>
+            <button 
+            onClick={() => cartCtx.addItem(coffee)} 
+            className={isItemInCart(coffee.id) ? "add-to-cart-btn active" : "add-to-cart-btn"}
+            disabled={isItemInCart(coffee.id)}
+            >
               <PiShoppingCartThin size={18} />
-              Add to Cart
+              {isItemInCart(coffee.id) ? "In Cart" : "Add to Cart"}
             </button>
           </div>
 
