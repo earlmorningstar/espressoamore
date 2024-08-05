@@ -1,14 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import LikedItemsContext from "../store/LikedItemsContext";
+import CartContext from "../store/CartContext";
 import MainNavigation from "../components/MainNavigation";
+import "./Styles.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
-import "./Styles.css";
 import { FaHeart } from "react-icons/fa";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 
 function RootLayout() {
+  const likedItemCtx = useContext(LikedItemsContext);
+  const cartCtx = useContext(CartContext);
+
+  const uniqueLikedItems = new Set(likedItemCtx.items.map((item) => item.id));
+  const totalLikedItems = uniqueLikedItems.size;
+
+  const uniqueCartItems = new Set(cartCtx.items.map((item) => item.id));
+  const totalCartItems = uniqueCartItems.size;
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -178,15 +189,34 @@ function RootLayout() {
             {isLoggedIn && (
               <>
                 <div className="root-nav-cart-profile-icon-parent">
-                <NavLink to="/favoritedItemsPage" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
-                   Favorites <span className="cart-num"><FaHeart size={20}/> <p>(17)</p></span>
+                  <NavLink
+                    to="/favoritedItemsPage"
+                    onClick={toggleDropdown}
+                    className="cart-profile-icon-navlink-parent"
+                  >
+                    Favorites{" "}
+                    <span className="cart-num">
+                      <FaHeart size={20} /> <p>'{totalLikedItems}'</p>
+                    </span>
                   </NavLink>
 
-                  <NavLink to="/cartItemsPage" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
-                   My Cart <span className="cart-num"><PiShoppingCartFill color="rgb(48, 31, 21)" size={25} /> <p>(17)</p></span>
+                  <NavLink
+                    to="/cartItemsPage"
+                    onClick={toggleDropdown}
+                    className="cart-profile-icon-navlink-parent"
+                  >
+                    My Cart{" "}
+                    <span className="cart-num">
+                      <PiShoppingCartFill color="rgb(48, 31, 21)" size={25} />{" "}
+                      <p>'{totalCartItems}'</p>
+                    </span>
                   </NavLink>
 
-                  <NavLink to="/benny" onClick={toggleDropdown} className="cart-profile-icon-navlink-parent">
+                  <NavLink
+                    to="/benny"
+                    onClick={toggleDropdown}
+                    className="cart-profile-icon-navlink-parent"
+                  >
                     My Profile <CgProfile color="rgb(48, 31, 21)" size={25} />
                   </NavLink>
                 </div>

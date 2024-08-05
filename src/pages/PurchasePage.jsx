@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { PiShoppingCartThin } from "react-icons/pi";
-import { IoIosHeartEmpty } from "react-icons/io";
-import { ScaleLoader } from "react-spinners";
+import CartContext from "../store/CartContext";
+import LikedItemsContext from "../store/LikedItemsContext";
 import { currencyFormatter } from "../Util/formatter";
+import { PiShoppingCartThin } from "react-icons/pi";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
+import { ScaleLoader } from "react-spinners";
 import "./Styles.css";
 
 const imageList = [
@@ -30,6 +32,9 @@ const imageList = [
 ];
 
 function PurchasePage() {
+  const cartCtx = useContext(CartContext);
+  const likedItemsCtx = useContext(LikedItemsContext);
+
   const [coffeeData, setCoffeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -72,10 +77,13 @@ function PurchasePage() {
   if (error) {
     return (
       <div className="error-page-main" id="err-msg">
-        <span>Sorry, we are experiencing issues loading our coffee selection.</span>
-        <span>Please
-        try again later. We apologize for any inconvenience and appreciate your
-        patience.</span>
+        <span>
+          Sorry, we are experiencing issues loading our coffee selection.
+        </span>
+        <span>
+          Please try again later. We apologize for any inconvenience and
+          appreciate your patience.
+        </span>
       </div>
     );
   }
@@ -84,6 +92,14 @@ function PurchasePage() {
     navigate(`/purchaseDetailPage/${coffee.id}`, {
       state: { coffee, image: imageList[index] },
     });
+  };
+
+  const toggleLike = (coffee) => {
+    if (likedItemsCtx.isItemLiked(coffee)) {
+      likedItemsCtx.removeLikedItem(coffee.id);
+    } else {
+      likedItemsCtx.addLikedItem(coffee);
+    }
   };
 
   return (
@@ -112,18 +128,26 @@ function PurchasePage() {
               <div className="prod-info">
                 <div className="prodtitle-favBtn-holder">
                   <h2>{coffee.name}</h2>
-                  <IoIosHeartEmpty size={20} />
+                  <span onClick={() => toggleLike(coffee)}>
+                    {likedItemsCtx.isItemLiked(coffee) ? (
+                      <IoIosHeart size={20} color="red" />
+                    ) : (
+                      <IoIosHeartEmpty size={20} style={{ color: 'rgb(219, 188, 160)', border: 'none' }} />
+                    )}
+                  </span>
                 </div>
                 <p>
                   {coffee.description.substring(0, 60)}
                   {coffee.description.length > 60 ? "..." : ""}
                 </p>
-                <p>Price: <b>{currencyFormatter.format(coffee.price)}</b></p>
+                <p>
+                  Price: <b>{currencyFormatter.format(coffee.price)}</b>
+                </p>
                 <span className="prod-btn-holder">
                   <button onClick={() => handleCoffeeClick(coffee, index)}>
                     View Product
                   </button>
-                  <button>
+                  <button onClick={() => cartCtx.addItem(coffee)}>
                     <PiShoppingCartThin size={18} />
                     Add to Cart
                   </button>

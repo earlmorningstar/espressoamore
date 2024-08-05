@@ -1,8 +1,4 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { UserProgressContextProvider } from "./store/UserProgressContext";
-import { CartContextProvider } from "./store/CartContext";
-import { LikedItemsContextProvider } from "./store/LikedItemsContext";
-
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
@@ -47,13 +43,7 @@ function App() {
   return (
     <RouterProvider router={router}>
       <ScrollProvider>
-        <UserProgressContextProvider>
-          <LikedItemsContextProvider>
-            <CartContextProvider>
-              <RootLayout />
-            </CartContextProvider>
-          </LikedItemsContextProvider>
-        </UserProgressContextProvider>
+        <RootLayout />
       </ScrollProvider>
     </RouterProvider>
   );

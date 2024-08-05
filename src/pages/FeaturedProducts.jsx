@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import CartContext from "../store/CartContext";
 import { NavLink } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { currencyFormatter } from "../Util/formatter";
@@ -28,6 +29,8 @@ const imageList = [
 ];
 
 function FeaturedProducts() {
+  const cartCtx = useContext(CartContext);
+
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [coffeeData, setCoffeeData] = useState([]);
   const [error, setError] = useState(false);
@@ -117,7 +120,7 @@ function FeaturedProducts() {
                   >
                     <button className="ft-view-btn ">View Product</button>
                   </NavLink>
-                  <button>
+                  <button onClick={() => cartCtx.addItem(coffee)}>
                     <PiShoppingCartThin size={18} />
                     Add to Cart
                   </button>

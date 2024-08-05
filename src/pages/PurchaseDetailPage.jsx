@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import CartContext from "../store/CartContext";
 import { useLocation, NavLink } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { ScaleLoader } from "react-spinners";
@@ -6,6 +7,9 @@ import { currencyFormatter } from "../Util/formatter";
 
 
 function PurchaseDetailPage() {
+
+  const cartCtx = useContext(CartContext);
+
   const location = useLocation();
   const { coffee, image } = location.state;
   const [loading, setLoading] = useState(false);
@@ -79,7 +83,7 @@ function PurchaseDetailPage() {
             ))}
           </ul>
           <div className="prod-btn-holder">
-            <button>
+            <button onClick={() => cartCtx.addItem(coffee)}>
               <PiShoppingCartThin size={18} />
               Add to Cart
             </button>
