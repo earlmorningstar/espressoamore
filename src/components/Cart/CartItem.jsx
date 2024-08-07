@@ -25,7 +25,7 @@ function CartItem() {
           <button className="all-back-btn">Home</button>
         </NavLink>
         <NavLink className="navlinkBtn" to="/purchasePage">
-          <button className="all-back-btn">Back</button>
+          <button className="all-back-btn">Add an item</button>
         </NavLink>
       </div>
       <h1>Your Cart Items:</h1>
