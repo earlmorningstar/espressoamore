@@ -5,6 +5,7 @@ const CartContext = createContext({
   addItem: (item) => {},
   removeItem: (id) => {},
   clearCart: () => {},
+  toggleItem: (item) => {},
 });
 
 function CartReducer(state, action) {
@@ -44,6 +45,16 @@ function CartReducer(state, action) {
       }
       return { ...state, items: updatedRemoveItems };
 
+    case "TOGGLE_ITEM":
+      const toggleItemIndex = state.items.findIndex(
+        (item) => item.id === action.item.id
+      );
+      if (toggleItemIndex > -1) {
+        return CartReducer(state, { type: "REMOVE_ITEMS", id: action.item.id });
+      } else {
+        return CartReducer(state, { type: "ADD_ITEMS", item: action.item });
+      }
+
     case "CLEAR_CART":
       return { ...state, items: [] };
 
@@ -63,6 +74,10 @@ export function CartContextProvider({ children }) {
     dispatchCartAction({ type: "REMOVE_ITEMS", id: id });
   }
 
+  function toggleItem(item) {
+    dispatchCartAction({ type: "TOGGLE_ITEM", item: item });
+  }
+
   function clearCart() {
     dispatchCartAction({ type: "CLEAR_CART" });
   }
@@ -71,6 +86,7 @@ export function CartContextProvider({ children }) {
     items: cart.items,
     addItem,
     removeItem,
+    toggleItem,
     clearCart,
   };
 

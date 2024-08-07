@@ -126,12 +126,11 @@ function FeaturedProducts() {
                     <button className="ft-view-btn ">View Product</button>
                   </NavLink>
                   <button 
-                  onClick={() => cartCtx.addItem(coffee)}
+                  onClick={() => cartCtx.toggleItem(coffee)}
                   className={isItemInCart(coffee.id) ? "add-to-cart-btn active" : "add-to-cart-btn"}
-                  disabled={isItemInCart(coffee.id)}
                   >
                     <PiShoppingCartThin size={18} />
-                    {isItemInCart(coffee.id) ? "In Cart" : "Add to Cart"}
+                    {isItemInCart(coffee.id) ? "Remove from Cart" : "Add to Cart"}
                   </button>
                 </span>
               </div>

@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ScrollProvider } from "./store/ScrollContext";
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
@@ -12,9 +13,11 @@ import TermsOfUse from "./pages/TermsOfUse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LoginPage from "./pages/LoginPage";
 import WelcomePage from "./pages/WelcomePage";
-import { ScrollProvider } from "./store/ScrollContext";
 import FavoritedItems from "./components/Favorites/FavoritedItems";
 import CartItem from "./components/Cart/CartItem";
+import CartSummary from "./components/Cart/CartSummary";
+import CheckoutForm from "./components/Cart/CheckoutForm";
+import PaymentStatus from "./components/Cart/PaymentStatus";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,9 @@ const router = createBrowserRouter([
       { path: "/privacyPolicyPage", element: <PrivacyPolicy /> },
       { path: "/favoritedItemsPage", element: <FavoritedItems /> },
       { path: "/cartItemsPage", element: <CartItem /> },
+      { path: "/cartSummaryPage", element: <CartSummary />},
+      { path: "/checkoutFormPage", element: <CheckoutForm />},
+      { path: "/paymentStatusPage", element: <PaymentStatus />},
     ],
   },
 ]);

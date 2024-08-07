@@ -13,13 +13,10 @@ import { CgProfile } from "react-icons/cg";
 function RootLayout() {
   const likedItemCtx = useContext(LikedItemsContext);
   const cartCtx = useContext(CartContext);
-
   const uniqueLikedItems = new Set(likedItemCtx.items.map((item) => item.id));
   const totalLikedItems = uniqueLikedItems.size;
-
   const uniqueCartItems = new Set(cartCtx.items.map((item) => item.id));
   const totalCartItems = uniqueCartItems.size;
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -80,20 +77,20 @@ function RootLayout() {
             Home
           </NavLink>
           <NavLink
-            to="/features"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-            end
-          >
-            Features
-          </NavLink>
-          <NavLink
             to="/purchasePage"
             className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
             activeClassName="active"
             end
           >
             Purchase
+          </NavLink>
+          <NavLink
+            to="/features"
+            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
+            activeClassName="active"
+            end
+          >
+            Features
           </NavLink>
           <NavLink
             to="/aboutUs"
@@ -133,15 +130,6 @@ function RootLayout() {
               Home
             </NavLink>
             <NavLink
-              to="/features"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-              end
-            >
-              Features
-            </NavLink>
-            <NavLink
               to="/purchasePage"
               className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
               id="root-nav-id"
@@ -149,6 +137,15 @@ function RootLayout() {
               end
             >
               Purchase
+            </NavLink>
+            <NavLink
+              to="/features"
+              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
+              id="root-nav-id"
+              onClick={toggleDropdown}
+              end
+            >
+              Features
             </NavLink>
             <NavLink
               to="/aboutUs"

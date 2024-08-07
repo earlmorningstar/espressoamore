@@ -136,7 +136,10 @@ function PurchasePage() {
                     {likedItemsCtx.isItemLiked(coffee) ? (
                       <IoIosHeart size={20} color="red" />
                     ) : (
-                      <IoIosHeartEmpty size={20} style={{ color: 'rgb(219, 188, 160)', border: 'none' }} />
+                      <IoIosHeartEmpty
+                        size={20}
+                        style={{ color: "rgb(219, 188, 160)", border: "none" }}
+                      />
                     )}
                   </span>
                 </div>
@@ -152,12 +155,17 @@ function PurchasePage() {
                     View Product
                   </button>
                   <button
-                    onClick={() => cartCtx.addItem(coffee)}
-                    className={isItemInCart(coffee.id) ? "add-to-cart-btn active" : "add-to-cart-btn"}
-                    disabled={isItemInCart(coffee.id)}
+                    onClick={() => cartCtx.toggleItem(coffee)}
+                    className={
+                      isItemInCart(coffee.id)
+                        ? "add-to-cart-btn active"
+                        : "add-to-cart-btn"
+                    }
                   >
                     <PiShoppingCartThin size={18} />
-                    {isItemInCart(coffee.id) ? "In Cart" : "Add to Cart"}
+                    {isItemInCart(coffee.id)
+                      ? "Remove from Cart"
+                      : "Add to Cart"}
                   </button>
                 </span>
               </div>
