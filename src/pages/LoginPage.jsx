@@ -68,23 +68,31 @@ function LoginPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const existingUsers = readUserData();
-      const user = existingUsers.find(
-        (user) =>
-          user.username === formData.username &&
-          user.password === formData.password
-      );
-      if (user) {
-        handleLoginSuccess();
-        setAlertOpen(true);
-        setTimeout(() => {
-          setAlertOpen(false);
-          navigate("/homePage");
-        }, 1000);
-      } else {
+      try {
+        const existingUsers = await readUserData();
+        const user = existingUsers.find(
+          (user) =>
+            user.username === formData.username &&
+            user.password === formData.password
+        );
+        if (user) {
+          handleLoginSuccess();
+          setAlertOpen(true);
+          setTimeout(() => {
+            setAlertOpen(false);
+            navigate("/homePage");
+          }, 1000);
+        } else {
+          setErrorAlertOpen(true);
+          setTimeout(() => {
+            setErrorAlertOpen(false);
+          }, 3000);
+        }
+      } catch (error) {
+        console.error('Error reading user data:', error);
         setErrorAlertOpen(true);
         setTimeout(() => {
           setErrorAlertOpen(false);
@@ -92,6 +100,7 @@ function LoginPage() {
       }
     }
   };
+  
 
   if (loading) {
     return (

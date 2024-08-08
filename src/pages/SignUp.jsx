@@ -123,17 +123,17 @@ function SignUp() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const existingUsers = readUserData();
+      const existingUsers = await readUserData();
       const newUser = {
         email: formData.email,
         username: formData.username,
         age: formData.age,
         password: formData.password,
       };
-      saveUserData([...existingUsers, newUser]);
+      await saveUserData([...existingUsers, newUser]);
       setAlertOpen(true);
       setTimeout(() => {
         setAlertOpen(false);
