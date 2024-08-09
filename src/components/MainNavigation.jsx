@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
 import { GiCoffeeCup } from "react-icons/gi";
@@ -9,6 +9,8 @@ import { FaHeart } from "react-icons/fa";
 import "./MainNavigation.css";
 
 function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
+  const navigate = useNavigate();
+
   const likedItemCtx = useContext(LikedItemsContext);
   const cartCtx = useContext(CartContext);
 
@@ -18,10 +20,14 @@ function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
   const uniqueCartItems = new Set(cartCtx.items.map((item) => item.id));
   const totalCartItems = uniqueCartItems.size;
 
+  const handleHomePage = () => {
+    navigate("/homePage");
+  };
+
   return (
     <>
       <nav className="navbar">
-        <p>
+        <p onClick={handleHomePage}>
           {title}
           <GiCoffeeCup size={30} color="rgb(205, 196, 189)" />
         </p>
@@ -50,7 +56,7 @@ function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
                   <p>'{totalCartItems}'</p>
                 </span>
               </NavLink>
-              <NavLink className="cart-profile-icon-nav-parent">
+              <NavLink to='/userProfilePage' className="cart-profile-icon-nav-parent">
                 <CgProfile color="rgb(205, 196, 189)" size={20} />
               </NavLink>
             </div>

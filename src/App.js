@@ -18,6 +18,7 @@ import CartItem from "./components/Cart/CartItem";
 import CartSummary from "./components/Cart/CartSummary";
 import CheckoutForm from "./components/Cart/CheckoutForm";
 import PaymentStatus from "./components/Cart/PaymentStatus";
+import UserProfile from "./components/userAccount/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -38,9 +39,10 @@ const router = createBrowserRouter([
       { path: "/privacyPolicyPage", element: <PrivacyPolicy /> },
       { path: "/favoritedItemsPage", element: <FavoritedItems /> },
       { path: "/cartItemsPage", element: <CartItem /> },
-      { path: "/cartSummaryPage", element: <CartSummary />},
-      { path: "/checkoutFormPage", element: <CheckoutForm />},
-      { path: "/paymentStatusPage", element: <PaymentStatus />},
+      { path: "/cartSummaryPage", element: <CartSummary /> },
+      { path: "/checkoutFormPage", element: <CheckoutForm /> },
+      { path: "/paymentStatusPage", element: <PaymentStatus /> },
+      { path: "/userProfilePage", element: <UserProfile /> },
     ],
   },
 ]);
