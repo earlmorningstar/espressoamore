@@ -38,29 +38,46 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const cors = require('cors');
+// const cors = require('cors');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
 const filePath = './users.json';
 
-// Middleware
-app.use(bodyParser.json());
 
-// Secure CORS setup for production
-const allowedOrigins = ['http://localhost:3000', 'https://espressoamore.vercel.app'];
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+app.use(bodyParser.json());
+app.use(express.static("public"));
+// app.use(express.json());
+
+
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
+// Middleware
+// app.use(bodyParser.json());
+
+// // Secure CORS setup for production
+// const allowedOrigins = ['http://localhost:3000', 'https://espressoamore.vercel.app'];
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   }
+// }));
 
 // Read users
+
+
+
 app.get('/users', (req, res) => {
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {

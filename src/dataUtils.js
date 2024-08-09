@@ -25,9 +25,12 @@ export const saveUserData = async (users) => {
 
 
 
+
 // import axios from 'axios';
 
-// const API_URL = 'http://localhost:5000/users';
+// const API_URL = process.env.NODE_ENV === 'production'
+//   ? '/api/users'
+//   : 'http://localhost:5000/users';
 
 // export const readUserData = async () => {
 //   try {
@@ -47,7 +50,6 @@ export const saveUserData = async (users) => {
 //     console.error('Error saving user data:', error);
 //   }
 // };
-
 
 
 
