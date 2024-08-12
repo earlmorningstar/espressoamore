@@ -83,7 +83,6 @@ function FeaturedProducts() {
     }
   }, [coffeeData]);
 
-
   const isItemInCart = (coffeeId) => {
     return cartCtx.items.some((item) => item.id === coffeeId);
   };
@@ -99,8 +98,13 @@ function FeaturedProducts() {
 
       {error ? (
         <div className="err-msg">
-          <span>Sorry, we are experiencing issues loading our coffee selection.</span>
-          <span>Please try again later. We apologize for any inconvenience and appreciate your patience.</span>
+          <span>
+            Sorry, we are experiencing issues loading our coffee selection.
+          </span>
+          <span>
+            Please try again later. We apologize for any inconvenience and
+            appreciate your patience.
+          </span>
         </div>
       ) : (
         <div className="featured-products-list">
@@ -116,7 +120,9 @@ function FeaturedProducts() {
                   {coffee.description.substring(0, 70)}
                   {coffee.description.length > 70 ? "..." : ""}
                 </p>
-                <p>Price: <b>{currencyFormatter.format(coffee.price)}</b></p>
+                <p>
+                  Price: <b>{currencyFormatter.format(coffee.price)}</b>
+                </p>
                 <span className="prod-btn-holder">
                   <NavLink
                     className="ft-navLink"
@@ -125,12 +131,18 @@ function FeaturedProducts() {
                   >
                     <button className="ft-view-btn ">View Product</button>
                   </NavLink>
-                  <button 
-                  onClick={() => cartCtx.toggleItem(coffee)}
-                  className={isItemInCart(coffee.id) ? "add-to-cart-btn active" : "add-to-cart-btn"}
+                  <button
+                    onClick={() => cartCtx.toggleItem(coffee)}
+                    className={
+                      isItemInCart(coffee.id)
+                        ? "add-to-cart-btn active"
+                        : "add-to-cart-btn"
+                    }
                   >
                     <PiShoppingCartThin size={18} />
-                    {isItemInCart(coffee.id) ? "Remove from Cart" : "Add to Cart"}
+                    {isItemInCart(coffee.id)
+                      ? "Remove from Cart"
+                      : "Add to Cart"}
                   </button>
                 </span>
               </div>

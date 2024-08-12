@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import CartContext from "../store/CartContext";
 import LikedItemsContext from "../store/LikedItemsContext";
 import { currencyFormatter } from "../Util/formatter";
+import { motion } from "framer-motion";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import { ScaleLoader } from "react-spinners";
@@ -30,6 +31,21 @@ const imageList = [
   { src: "/images/pur19.jpg", alt: "product image 19" },
   { src: "/images/pur20.jpg", alt: "product image 20" },
 ];
+
+const gridContainerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+};
+
+const gridSquareVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
 
 function PurchasePage() {
   const cartCtx = useContext(CartContext);
@@ -122,9 +138,14 @@ function PurchasePage() {
         Browse our selection and choose your favorite coffee to add to your cart
         and place an order.
       </h3>
-      <ul className="purchaseProduct">
+      <motion.ul
+        variants={gridContainerVariants}
+        initial="hidden"
+        animate="show"
+        className="purchaseProduct"
+      >
         {coffeeData.map((coffee, index) => (
-          <div key={coffee.id}>
+          <motion.div variants={gridSquareVariants} key={coffee.id}>
             <li>
               <div className="prod-img">
                 <img src={imageList[index].src} alt={coffee.name} width="200" />
@@ -170,9 +191,9 @@ function PurchasePage() {
                 </span>
               </div>
             </li>
-          </div>
+          </motion.div>
         ))}
-      </ul>
+      </motion.ul>
     </div>
   );
 }

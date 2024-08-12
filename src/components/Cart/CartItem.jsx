@@ -2,6 +2,7 @@ import { useContext } from "react";
 import CartContext from "../../store/CartContext";
 import { currencyFormatter } from "../../Util/formatter";
 import { NavLink, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { IoMdAdd } from "react-icons/io";
 import { LuMinus } from "react-icons/lu";
 
@@ -18,6 +19,21 @@ function CartItem() {
     navigate("/cartSummaryPage");
   };
 
+  const gridContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      },
+    },
+  };
+
+  const gridSquareVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
+
   return (
     <div className="cart-parent">
       <div className="navlink-container" id="twin-nav-btn">
@@ -30,12 +46,22 @@ function CartItem() {
       </div>
       <h1>Your Cart Items:</h1>
       {cartCtx.items.length === 0 ? (
-        <span className="notification-msg">You don't have any selected items in cart to view.</span>
+        <span className="notification-msg">
+          You don't have any selected items in cart to view.
+        </span>
       ) : (
         <>
-          <ul>
+          <motion.ul
+            variants={gridContainerVariants}
+            initial="hidden"
+            animate="show"
+          >
             {cartCtx.items.map((item) => (
-              <li className="cart-list" key={item.id}>
+              <motion.li
+                variants={gridSquareVariants}
+                className="cart-list"
+                key={item.id}
+              >
                 <div>
                   <h3>{item.name}:</h3>
                 </div>
@@ -49,9 +75,9 @@ function CartItem() {
                 <span onClick={() => cartCtx.removeItem(item.id)}>
                   <LuMinus size={15} color="rgb(219, 188, 160)" />
                 </span>
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         </>
       )}
       <h3>Total Cart Sum: {currencyFormatter.format(totalSum)}</h3>

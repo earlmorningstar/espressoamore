@@ -3,6 +3,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 
 /* NavBar Section---- */
 
@@ -547,6 +549,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-x: hidden;
 }
 
 .chooseCoffee-textHolder > h4 {
@@ -690,6 +693,7 @@
   display: flex;
   flex-direction: column;
   gap: 13px;
+  overflow-x: hidden;
 }
 
 .readMore-textParent > p {
@@ -727,6 +731,116 @@
   padding: 3rem 4rem;
   background-color: rgb(219, 188, 160);
   color: rgb(48, 31, 21);
+}
+
+/* ProsOfShopping Section --- */
+
+.pros-parent {
+  font-family: "Manrope", sans-serif;
+  background-color: rgb(48, 31, 21);
+  color: rgb(205, 196, 189);
+  padding: 1rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 20px;
+}
+
+.pros-holder {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.each-pros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pros-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pros-info > h3 {
+  font-size: 14px;
+}
+
+.pros-info > h4 {
+  font-size: 11px;
+}
+
+/* Footer Section --- */
+
+.footer-parent {
+  font-family: "Barlow Condensed", sans-serif;
+  background-color: rgb(48, 31, 21);
+  color: rgb(205, 196, 189);
+  border: 1px solid rgb(219, 188, 160);
+  padding: 3rem 5rem;
+  width: 100%;
+  display: flex;
+}
+
+.footer-links-holder {
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.footer-links-holder > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links-holder > div > h4 {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.footer-links-holder > div > span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 400;
+  margin-bottom: 3px;
+}
+
+.footer-signUp-holder {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-signUp-holder > h4 {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.signUp-style {
+  width: 100%;
+}
+
+.signUp-style > input {
+  padding: 15px 8px;
+  border: 1px solid rgb(111, 66, 56);
+  border-radius: 0px;
+  width: 70%;
+}
+
+.signUp-style > button {
+  cursor: pointer;
+  padding: 16px 6px;
+  background-color: rgb(111, 66, 56);
+  color:  #f5f5f7;
+  border: none;
+  width: 30%;
+}
+
+.footer-media-links {
+  display: flex;
+  gap: 30px;
 }
 
 /* Features Section---- */
@@ -1299,6 +1413,18 @@
   .payment-status-parent {
     padding: 2rem 1rem 4rem 1rem;
   }
+
+  .pros-parent {
+    padding: 1rem 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-parent {
+    padding: 3rem 3rem;
+   }
+   .footer-links-holder {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 850px) {
@@ -1333,9 +1459,30 @@
   .checkout-form-parent {
     padding: 2rem 2rem 4rem 2rem;
   }
-  /* .payment-status-parent {
-    padding: 2rem 2rem 4rem 2rem;
-  } */
+  .pros-parent {
+    padding: 1rem 2rem;
+  }
+  
+  .footer-parent {
+    padding: 3rem 2rem;
+    flex-direction: column;
+    gap: 20px;
+   }
+
+   .footer-links-holder {
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 20px;
+    margin-bottom: 20px;
+  }
+  .footer-signUp-holder {
+    width: 100%;
+    gap: 20px;
+  }
+
+  .footer-media-links {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 750px) {
@@ -1423,6 +1570,9 @@
   .checkout-form-parent {
     padding: 2rem 1rem 4rem 1rem;
   }
+  .pros-parent {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -1490,6 +1640,18 @@
   .success-alert-box {
     width: 100%;
   }
+
+  .pros-parent {
+    padding: 1rem;
+  }
+
+  .footer-links-holder {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-parent {
+    padding: 3rem 1rem;
+   }
 }
 
 @media screen and (max-width: 550px) {
