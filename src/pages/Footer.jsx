@@ -62,7 +62,7 @@ function Footer() {
         Espresso Amore uses your email address solely for the purpose of sending
           you updates, promotions, and important information related to its
           products and services. Your email address is not shared with third
-          parties and is kept confidential in accordance with ShopSphere's
+          parties and is kept confidential in accordance with Espresso Amore's
           privacy policy.
         </span>
         <FooterSignUpForm />

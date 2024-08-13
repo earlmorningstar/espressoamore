@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 const CartContext = createContext({
   items: [],
@@ -10,6 +10,9 @@ const CartContext = createContext({
 
 function CartReducer(state, action) {
   switch (action.type) {
+    case "INIT_ITEMS":
+      return { ...state, items: action.items };
+
     case "ADD_ITEMS":
       const existingCartItemIndex = state.items.findIndex(
         (item) => item.id === action.item.id
@@ -65,6 +68,21 @@ function CartReducer(state, action) {
 
 export function CartContextProvider({ children }) {
   const [cart, dispatchCartAction] = useReducer(CartReducer, { items: [] });
+
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      dispatchCartAction({ type: "INIT_ITEMS", items: JSON.parse(storedCartItems) });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cart.items.length > 0) {
+      localStorage.setItem("cartItems", JSON.stringify(cart.items));
+    } else {
+      localStorage.removeItem("cartItems");
+    }
+  }, [cart.items]);
 
   function addItem(item) {
     dispatchCartAction({ type: "ADD_ITEMS", item: item });

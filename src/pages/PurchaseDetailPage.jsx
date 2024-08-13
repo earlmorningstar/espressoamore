@@ -7,14 +7,12 @@ import { currencyFormatter } from "../Util/formatter";
 
 
 function PurchaseDetailPage() {
-
   const cartCtx = useContext(CartContext);
-
   const location = useLocation();
   const { coffee, image } = location.state;
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     if (!coffee) {
       setLoading(true);
     } else {

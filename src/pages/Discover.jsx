@@ -1,13 +1,7 @@
 import "./Styles.css";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  motion,
-  useAnimation,
-  useInView,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const images = [
   { src: "/images/realistic-Wcup-coffee.png", alt: "navbar image 1" },
@@ -21,72 +15,63 @@ function Discover() {
   };
 
   const containerRef = useRef(null);
-  const isInview = useInView(containerRef, { once: true });
-  const mainControls = useAnimation();
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end end"],
+    offset: ["0 1", "1.33 1"],
   });
 
-  const paragraphOneValue = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["-100%", "0%"]
-  );
+  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
-  const paragraphTwoValue = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["100%", "0%"]
-  );
-
-  useEffect(() => {
-    if (isInview) {
-      mainControls.start("visible");
-    }
-  }, [isInview]);
-  
   return (
     <div className="discover-parent">
-      <div className="discover-textInfo" ref={containerRef}>
+      <motion.div style={{
+            scale: scaleProgress,
+            opacity: opacityProgress,
+          }} className="discover-textInfo" ref={containerRef}>
         <motion.h2
-          animate={mainControls}
-          initial="hidden"
-          variants={{
-            hidden: { opacity: 0, y: 75 },
-            visible: {
-              opacity: 1,
-              y: 0,
-            },
+          style={{
+            scale: scaleProgress,
+            opacity: opacityProgress,
           }}
-          transition={{ delay: 0.3 }}
         >
           Unveil the Magic of Espresso Amore:
         </motion.h2>
         <motion.h4
-          animate={mainControls}
-          initial="hidden"
-          variants={{
-            hidden: { opacity: 0, y: 75 },
-            visible: {
-              opacity: 1,
-              y: 0,
-            },
+          style={{
+            scale: scaleProgress,
+            opacity: opacityProgress,
           }}
-          transition={{ delay: 0.3 }}
         >
           Your Coffee, Reimagined
         </motion.h4>
 
         <div className="readMore-textParent">
-          <motion.p style={{ translateX: paragraphOneValue }}>
+          <motion.p
+            style={{
+              scale: scaleProgress,
+              opacity: opacityProgress,
+            }}
+          >
             Welcome to Espresso Amore, where each sip takes you on a journey of
             rich flavors and unmatched quality. Our commitment is simple: to
             elevate your coffee experience by offering the finest brews crafted
             with passion and precision.
           </motion.p>
-          <span>Our Story</span>
-          <motion.p style={{ translateX: paragraphTwoValue }}>
+          <motion.span
+            style={{
+              scale: scaleProgress,
+              opacity: opacityProgress,
+            }}
+          >
+            Our Story
+          </motion.span>
+          <motion.p
+            style={{
+              scale: scaleProgress,
+              opacity: opacityProgress,
+            }}
+          >
             At Espresso Amore, we believe that coffee is more than just a
             beverage; it's a moment of indulgence, a catalyst for connection,
             and a source of inspiration. Our journey began with a deep love for
@@ -102,7 +87,7 @@ function Discover() {
             Read More
           </button>
         </div>
-      </div>
+      </motion.div>
 
       <span className="discover-image-container">
         <img src={images[0].src} alt={images[0].alt} />

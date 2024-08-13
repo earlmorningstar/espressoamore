@@ -1,12 +1,5 @@
-import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  motion,
-  useAnimation,
-  useInView,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import "./Styles.css";
 
 const video = {
@@ -15,68 +8,52 @@ const video = {
 };
 
 function ChooseCoffee() {
-  const containerRef = useRef(null);
-  const isInview = useInView(containerRef, { once: true });
-  const mainControls = useAnimation();
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"],
-  });
+  const gridContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      },
+    },
+  };
 
-
-  const paragraphOneValue = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["-80%", "0%"]
-  );
-
-  const paragraphTwoValue = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["80%", "0%"]
-  );
-
-  useEffect(() => {
-    if (isInview) {
-      mainControls.start("visible");
-    }
-  }, [isInview]);
+  const gridSquareVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
 
   return (
     <div className="chooseCoffee-parent">
       <span className="chooseCoffee-video-container">
         <video src={video.src} alt={video.alt} autoPlay muted controls />
       </span>
-      <div className="chooseCoffee-textHolder" ref={containerRef}>
-        <motion.h4
-          animate={mainControls}
-          initial="hidden"
-          variants={{
-            hidden: { opacity: 0, y: 75 },
-            visible: {
-              opacity: 1,
-              y: 0,
-            },
-          }}
-          transition={{ delay: 0.3 }}
-        >
-          Our Coffee
-        </motion.h4>
-        <motion.h3 style={{translateX: paragraphOneValue}}>Select Your Perfect Coffee Blend</motion.h3>
-        <motion.p style={{translateX: paragraphTwoValue}}>
+      <motion.div
+        variants={gridContainerVariants}
+        initial="hidden"
+        animate="show"
+        className="chooseCoffee-textHolder"
+      >
+        <motion.h4 variants={gridSquareVariants}>Our Coffee</motion.h4>
+        <motion.h3 variants={gridSquareVariants}>
+          Select Your Perfect Coffee Blend
+        </motion.h3>
+        <motion.p variants={gridSquareVariants}>
           Over 90 varieties of coffee, expertly crafted and ready to serve by
           our seasoned baristas.
         </motion.p>
-        <motion.span style={{translateX: paragraphTwoValue}}>
-          <li>Espresso</li>
-          <li>Latte</li>
-          <li>Cappuccino</li>
-          <li>Americano</li>
-        </motion.span>
+        <span>
+          <motion.li variants={gridSquareVariants}>Espresso</motion.li>
+          <motion.li variants={gridSquareVariants}>Latte</motion.li>
+          <motion.li variants={gridSquareVariants}>Cappuccino</motion.li>
+          <motion.li variants={gridSquareVariants}>Americano</motion.li>
+        </span>
         <NavLink className="navlinkBtn" to="/purchasePage">
-          <button className="all-back-btn">More Menu</button>
+          <motion.button variants={gridSquareVariants} className="all-back-btn">
+            More Menu
+          </motion.button>
         </NavLink>
-      </div>
+      </motion.div>
     </div>
   );
 }

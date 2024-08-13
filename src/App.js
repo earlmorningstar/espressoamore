@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ScrollProvider } from "./store/ScrollContext";
+// import { ScrollProvider } from "./store/ScrollContext";
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import ErrorPage from "./pages/ErrorPage";
@@ -19,6 +19,7 @@ import CartSummary from "./components/Cart/CartSummary";
 import CheckoutForm from "./components/Cart/CheckoutForm";
 import PaymentStatus from "./components/Cart/PaymentStatus";
 import UserProfile from "./components/userAccount/UserProfile";
+import ContactPage from "./pages/ContactPage";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: "/checkoutFormPage", element: <CheckoutForm /> },
       { path: "/paymentStatusPage", element: <PaymentStatus /> },
       { path: "/userProfilePage", element: <UserProfile /> },
+      { path: "/contactPage", element: <ContactPage />}
     ],
   },
 ]);
@@ -50,9 +52,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <RouterProvider router={router}>
-      <ScrollProvider>
+      {/* <ScrollProvider> */}
         <RootLayout />
-      </ScrollProvider>
+      {/* </ScrollProvider> */}
     </RouterProvider>
   );
 }

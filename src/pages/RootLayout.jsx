@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
 import MainNavigation from "../components/MainNavigation";
@@ -20,6 +20,12 @@ function RootLayout() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const pathname = useLocation();
+
+  useEffect(()=> {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -101,7 +107,7 @@ function RootLayout() {
             About
           </NavLink>
           <NavLink
-            to="/blog"
+            to="/contactPage"
             className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
             activeClassName="active"
             end
@@ -157,7 +163,7 @@ function RootLayout() {
               About
             </NavLink>
             <NavLink
-              to="/blog"
+              to="/contactPage"
               className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
               id="root-nav-id"
               onClick={toggleDropdown}
