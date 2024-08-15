@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
@@ -17,13 +17,15 @@ function RootLayout() {
   const totalLikedItems = uniqueLikedItems.size;
   const uniqueCartItems = new Set(cartCtx.items.map((item) => item.id));
   const totalCartItems = uniqueCartItems.size;
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const inactivityTimeoutRef = useRef(null);
 
   const pathname = useLocation();
 
-  useEffect(()=> {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
@@ -44,11 +46,39 @@ function RootLayout() {
   useEffect(() => {
     const loggedIn = localStorage.getItem("isLoggedIn");
     setIsLoggedIn(loggedIn === "true");
+
+    // Add event listeners for user activity
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keypress", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+
+    return () => {
+      // Cleanup event listeners on component unmount
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keypress", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+    };
   }, []);
+
+  const startInactivityTimeout = () => {
+    // Log out the user after 10 minutes of inactivity (600000 ms)
+    inactivityTimeoutRef.current = setTimeout(() => {
+      handleLogout();
+    }, 600000); // 10 minutes
+  };
+
+  const resetInactivityTimeout = () => {
+    // Clear the existing timeout and start a new one
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    startInactivityTimeout();
+  };
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true");
+    resetInactivityTimeout(); // Start inactivity timer on login success
   };
 
   const handleLogout = () => {
@@ -220,7 +250,8 @@ function RootLayout() {
                     onClick={toggleDropdown}
                     className="cart-profile-icon-navlink-parent"
                   >
-                    My Profile <CgProfile color="rgb(48, 31, 21)" size={25} />
+                    My Profile{" "}
+                    <CgProfile color="rgb(48, 31, 21)" size={25} />
                   </NavLink>
                 </div>
 

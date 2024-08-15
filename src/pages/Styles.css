@@ -1109,7 +1109,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .contact-header-text > h2 {
@@ -1125,6 +1125,7 @@
 .contact-info {
   width: 100%;
   display: flex;
+  gap: 3rem;
 }
 
 .contact-form {
@@ -1132,11 +1133,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-.contact-info > div {
-  width: 50%;
-  padding: 0 5rem;
+  padding: 0 0 0 5rem;
 }
 
 .contact-info > div > h3 {
@@ -1187,6 +1184,48 @@
   color: rgb(205, 196, 189);
   border: none;
   border-radius: 4px;
+}
+
+.customerCare-info-holder {
+  width: 50%;
+  padding: 20px 0;
+}
+
+.contact-headers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-headers > h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.contact-headers > h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.contactUs-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0 0 20px 10px;
+}
+
+.contactUs-holder > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 15px;
+}
+
+#contact-btn-color {
+  color: rgb(205, 196, 189);
 }
 
 /* TermsOfUse Section---- */
@@ -1438,6 +1477,15 @@
   .summary-list-item > img {
     width: 100%;
   }
+
+  .contactNamesHolder {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-form {
+    padding: 0 0;
+  }
 }
 
 @media screen and (max-width: 950px) {
@@ -1576,6 +1624,10 @@
   .footer-media-links {
     width: 100%;
   }
+
+  .contact-parent {
+    padding: 3rem 2rem;
+  }
 }
 
 @media screen and (max-width: 750px) {
@@ -1666,6 +1718,15 @@
   .pros-parent {
     grid-template-columns: repeat(1, 1fr);
   }
+  .contact-info {
+    flex-direction: column;
+  }
+  .contact-form {
+    width: 70%;
+   }
+   .customerCare-info-holder {
+   width: 70%;
+   }
 }
 
 @media screen and (max-width: 650px) {
@@ -1745,6 +1806,15 @@
   .footer-parent {
     padding: 3rem 1rem;
   }
+  .contact-parent {
+    padding: 3rem 1rem;
+  }
+  .contact-form {
+    width: 85%;
+   }
+   .customerCare-info-holder {
+   width: 85%;
+   }
 }
 
 @media screen and (max-width: 550px) {
@@ -1760,4 +1830,10 @@
   .welcomePage-parent {
     padding: 2rem 1rem;
   }
+  .contact-form {
+    width: 100%;
+   }
+   .customerCare-info-holder {
+   width: 100%;
+   }
 }
