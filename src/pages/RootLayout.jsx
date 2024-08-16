@@ -3,6 +3,7 @@ import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
 import MainNavigation from "../components/MainNavigation";
+// import SimpleDialog from "./SimpleDialog";
 import "./Styles.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
@@ -22,6 +23,19 @@ function RootLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const inactivityTimeoutRef = useRef(null);
+  const isAutoLogout = useRef(false);
+  // const [openDialog, setOpenDialog] = useState(false);
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (location.state?.showTimeoutDialog) {
+  //     setOpenDialog(true);
+  //     }
+  // },[location.state]);
+
+  // const handleDialogClose = () => {
+  //   setOpenDialog(false);
+  // };
 
   const pathname = useLocation();
 
@@ -47,13 +61,11 @@ function RootLayout() {
     const loggedIn = localStorage.getItem("isLoggedIn");
     setIsLoggedIn(loggedIn === "true");
 
-    // Add event listeners for user activity
     window.addEventListener("mousemove", resetInactivityTimeout);
     window.addEventListener("keypress", resetInactivityTimeout);
     window.addEventListener("click", resetInactivityTimeout);
 
     return () => {
-      // Cleanup event listeners on component unmount
       window.removeEventListener("mousemove", resetInactivityTimeout);
       window.removeEventListener("keypress", resetInactivityTimeout);
       window.removeEventListener("click", resetInactivityTimeout);
@@ -61,14 +73,13 @@ function RootLayout() {
   }, []);
 
   const startInactivityTimeout = () => {
-    // Log out the user after 10 minutes of inactivity (600000 ms)
     inactivityTimeoutRef.current = setTimeout(() => {
+      isAutoLogout.current = true;
       handleLogout();
-    }, 600000); // 10 minutes
+    }, 600000);
   };
 
   const resetInactivityTimeout = () => {
-    // Clear the existing timeout and start a new one
     if (inactivityTimeoutRef.current) {
       clearTimeout(inactivityTimeoutRef.current);
     }
@@ -78,16 +89,22 @@ function RootLayout() {
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true");
-    resetInactivityTimeout(); // Start inactivity timer on login success
+    resetInactivityTimeout();
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.setItem("isLoggedIn", "false");
+    if (isAutoLogout.current) {
+      // Logic for inactivity logout, e.g., show SimpleDialog
+      // Reset the flag after handling auto-logout
+      isAutoLogout.current = false;
+    }
     navigate("/loginPage");
   };
 
   const handleDropDownLogout = () => {
+    isAutoLogout.current = false;
     setIsLoggedIn(false);
     toggleDropdown();
     localStorage.setItem("isLoggedIn", "false");
@@ -250,8 +267,7 @@ function RootLayout() {
                     onClick={toggleDropdown}
                     className="cart-profile-icon-navlink-parent"
                   >
-                    My Profile{" "}
-                    <CgProfile color="rgb(48, 31, 21)" size={25} />
+                    My Profile <CgProfile color="rgb(48, 31, 21)" size={25} />
                   </NavLink>
                 </div>
 
@@ -266,6 +282,7 @@ function RootLayout() {
           </div>
         </div>
       )}
+      {/* <SimpleDialog open={openDialog} onClose={handleDialogClose} /> */}
       <main>
         <Outlet context={{ handleLoginSuccess }} />
       </main>

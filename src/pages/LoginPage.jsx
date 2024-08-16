@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, 
+  // useLocation 
+} from "react-router-dom";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { readUserData } from "../dataUtils";
 import { FadeLoader } from "react-spinners";
+// import SimpleDialog from "./SimpleDialog";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -19,6 +22,18 @@ function LoginPage() {
   const [loading, setLoading] = useState(true);
   const [alertOpen, setAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  // const [openDialog, setOpenDialog] = useState(false);
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (location.state?.showTimeoutDialog) {
+  //     setOpenDialog(true);
+  //     }
+  // },[location.state]);
+
+  // const handleDialogClose = () => {
+  //   setOpenDialog(false);
+  // };
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
@@ -204,6 +219,7 @@ function LoginPage() {
           </button>
         </form>
       </div>
+      {/* <SimpleDialog open={openDialog} onClose={handleDialogClose} /> */}
     </div>
   );
 }
