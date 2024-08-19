@@ -20,9 +20,12 @@ function SignUp() {
   const handlePrivacyPolicyPage = () => navigate("/privacyPolicyPage");
 
   const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
     username: "",
     age: "",
+    mobile: "",
     password: "",
     confirmPassword: "",
     termsAndPolicy: false,
@@ -127,12 +130,30 @@ function SignUp() {
     e.preventDefault();
     if (validateForm()) {
       const existingUsers = await readUserData();
+      const isDuplicateUsername = existingUsers.some(user => user.username === formData.username);
+      const isDuplicateEmail = existingUsers.some(user => user.email === formData.email);
+  
+      if (isDuplicateUsername || isDuplicateEmail) {
+        setErrors({
+          username: isDuplicateUsername ? "Username already taken." : "",
+          email: isDuplicateEmail ? "Email already registered." : "",
+        });
+        return;
+      }
+
+      const currentDate = new Date().toLocaleDateString();
+
       const newUser = {
+        firstname: formData.firstname,
+        lastname: formData.lastname,
         email: formData.email,
         username: formData.username,
         age: formData.age,
+        mobile: formData.mobile,
         password: formData.password,
+        createdDate: currentDate,
       };
+      
       await saveUserData([...existingUsers, newUser]);
       setAlertOpen(true);
       setTimeout(() => {
@@ -174,6 +195,43 @@ function SignUp() {
         <h2>Create an account:</h2>
 
         <form className="SignUp-form" onSubmit={handleSubmit}>
+        
+        <div className="input-group">
+            <label htmlFor="firstname">
+              First Name
+              <LuAsterisk color="red" size={10} />
+            </label>
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              value={formData.firstname}
+              onChange={handleChange}
+              onBlur={(e) => validateField(e.target.name, e.target.value)}
+              required
+            />
+            {errors.firstname && (
+              <p className="validation-error">{errors.firstname}</p>
+            )}
+          </div>
+          <div className="input-group">
+            <label htmlFor="lastname">
+              Last Name
+              <LuAsterisk color="red" size={10} />
+            </label>
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              onBlur={(e) => validateField(e.target.name, e.target.value)}
+              required
+            />
+            {errors.lastname && (
+              <p className="validation-error">{errors.lastname}</p>
+            )}
+          </div>
           <div className="input-group">
             <label htmlFor="email">
               Email
@@ -223,6 +281,22 @@ function SignUp() {
               required
             />
             {errors.age && <p className="validation-error">{errors.age}</p>}
+          </div>
+          <div className="input-group">
+            <label htmlFor="mobile">
+              Mobile
+              <LuAsterisk color="red" size={10} />
+            </label>
+            <input
+              type="number"
+              id="mobile"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              onBlur={(e) => validateField(e.target.name, e.target.value)}
+              required
+            />
+            {errors.mobile && <p className="validation-error">{errors.mobile}</p>}
           </div>
           <div className="input-group">
             <label htmlFor="password">

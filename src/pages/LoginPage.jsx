@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext, 
-  // useLocation 
-} from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { readUserData } from "../dataUtils";
 import { FadeLoader } from "react-spinners";
-// import SimpleDialog from "./SimpleDialog";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -22,18 +19,6 @@ function LoginPage() {
   const [loading, setLoading] = useState(true);
   const [alertOpen, setAlertOpen] = useState(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-  // const [openDialog, setOpenDialog] = useState(false);
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state?.showTimeoutDialog) {
-  //     setOpenDialog(true);
-  //     }
-  // },[location.state]);
-
-  // const handleDialogClose = () => {
-  //   setOpenDialog(false);
-  // };
 
   const handleSignUpPage = () => {
     navigate("/SignUpPage");
@@ -83,31 +68,31 @@ function LoginPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
         const existingUsers = await readUserData();
-        const user = existingUsers.find(
+        const foundUser = existingUsers.find(
           (user) =>
             user.username === formData.username &&
             user.password === formData.password
         );
-        if (user) {
+  
+        if (foundUser) {
+          localStorage.setItem("loggedInUser", foundUser.username);
+          localStorage.setItem("accountCreationDate", foundUser.createdDate);
           handleLoginSuccess();
           setAlertOpen(true);
           setTimeout(() => {
-            setAlertOpen(false);
-            navigate("/homePage");
-          }, 1000);
-        } else {
-          setErrorAlertOpen(true);
-          setTimeout(() => {
-            setErrorAlertOpen(false);
+            navigate("/homepage");
           }, 3000);
+        } else {
+          setErrors({ login: "Invalid username or password." });
+          setErrorAlertOpen(true);
         }
       } catch (error) {
-        console.error('Error reading user data:', error);
+        console.error("Error reading user data:", error);
         setErrorAlertOpen(true);
         setTimeout(() => {
           setErrorAlertOpen(false);
@@ -143,7 +128,7 @@ function LoginPage() {
         </span>
         <p>Please log in to continue.</p>
 
-        <form className="SignUp-form" onSubmit={handleSubmit}>
+        <form className="SignUp-form" onSubmit={handleLogin}>
           <div className="input-group">
             <label htmlFor="username">
               Username
@@ -219,7 +204,6 @@ function LoginPage() {
           </button>
         </form>
       </div>
-      {/* <SimpleDialog open={openDialog} onClose={handleDialogClose} /> */}
     </div>
   );
 }

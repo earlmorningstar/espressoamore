@@ -3,7 +3,7 @@ import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
 import MainNavigation from "../components/MainNavigation";
-// import SimpleDialog from "./SimpleDialog";
+import SimpleDialog from "./SimpleDialog";
 import "./Styles.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
@@ -24,19 +24,7 @@ function RootLayout() {
   const navigate = useNavigate();
   const inactivityTimeoutRef = useRef(null);
   const isAutoLogout = useRef(false);
-  // const [openDialog, setOpenDialog] = useState(false);
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state?.showTimeoutDialog) {
-  //     setOpenDialog(true);
-  //     }
-  // },[location.state]);
-
-  // const handleDialogClose = () => {
-  //   setOpenDialog(false);
-  // };
-
+  const [openDialog, setOpenDialog] = useState(false);
   const pathname = useLocation();
 
   useEffect(() => {
@@ -76,7 +64,7 @@ function RootLayout() {
     inactivityTimeoutRef.current = setTimeout(() => {
       isAutoLogout.current = true;
       handleLogout();
-    }, 600000);
+    }, 900000);
   };
 
   const resetInactivityTimeout = () => {
@@ -96,10 +84,9 @@ function RootLayout() {
     setIsLoggedIn(false);
     localStorage.setItem("isLoggedIn", "false");
     if (isAutoLogout.current) {
-      // Logic for inactivity logout, e.g., show SimpleDialog
-      // Reset the flag after handling auto-logout
+      setOpenDialog(true);
       isAutoLogout.current = false;
-    }
+      }
     navigate("/loginPage");
   };
 
@@ -109,6 +96,10 @@ function RootLayout() {
     toggleDropdown();
     localStorage.setItem("isLoggedIn", "false");
     navigate("/loginPage");
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
   };
 
   return (
@@ -263,7 +254,7 @@ function RootLayout() {
                   </NavLink>
 
                   <NavLink
-                    to="/benny"
+                    to="/userProfilePage"
                     onClick={toggleDropdown}
                     className="cart-profile-icon-navlink-parent"
                   >
@@ -282,7 +273,7 @@ function RootLayout() {
           </div>
         </div>
       )}
-      {/* <SimpleDialog open={openDialog} onClose={handleDialogClose} /> */}
+      <SimpleDialog open={openDialog} onClose={handleDialogClose} />
       <main>
         <Outlet context={{ handleLoginSuccess }} />
       </main>

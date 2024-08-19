@@ -72,6 +72,7 @@
   z-index: 1000;
   animation: slideFromLeft 0.5s ease-in-out;
   animation: slideToRight 0.5s ease-in-out;
+  min-height: fit-content;
   max-height: calc(100vh - 60px);
   overflow-y: auto;
   scrollbar-width: thin;
@@ -1454,7 +1455,6 @@
 
 .user-profile-parent {
   font-family: "Raleway", sans-serif;
-  /* font-family: "Lato", sans-serif; */
   background-color: rgb(205, 196, 189);
   min-height: 100vh;
   padding: 3rem 1.5rem;
@@ -1523,6 +1523,7 @@
 .completion-holder {
   display: flex;
   gap: 20px;
+  width: 100%;
 }
 
 .percentage-holder {
@@ -1533,20 +1534,21 @@
   border: none;
   border-radius: 4px;
   padding: 0.8rem 1.5rem;
+  width: 50%;
 }
 
 .percentage-holder > span {
   font-size: 17px;
   font-weight: 700;
-  border: 2px solid #000000;
+  border: 1px solid #000000;
   padding: 10px;
-  border-radius: 50px;
-  width: 50px;
-  /* height: 50px;  */
-  /* line-height: 50px;  */
-  /* text-align: center; */
-  /* display: inline-block; */
-  /* line-height: 50px; */
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.percentage-holder > p {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .user-notice {
@@ -1571,8 +1573,28 @@
   font-weight: 700;
 }
 
-.user-notice > button {
-  /* width: fit-content; */
+.status-dateCreated-holder {
+  display: flex;
+  gap: 6rem;
+}
+
+.status-dateCreated-holder > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.status-dateCreated-holder > div > span {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.status-dateCreated-holder > div > p {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* Media Queries--- */
@@ -1698,6 +1720,23 @@
   .footer-links-holder {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .status-dateCreated-holder {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .user-image-username-holder {
+    flex-direction: column;
+  }
+
+  .percentage-holder {
+    padding: 0.8rem;
+  }
+
+  .user-notice {
+    padding: 3rem 1rem;
+  }
 }
 
 @media screen and (max-width: 850px) {
@@ -1759,6 +1798,20 @@
 
   .contact-parent {
     padding: 3rem 2rem;
+  }
+
+  .user-profile-parent {
+    flex-direction: column;
+  }
+
+  .user-profile-info-part-i {
+    width: 100%;
+    border-right: none;
+  }
+
+  .user-profile-info-part-ii {
+    width: 100%;
+    padding: 2rem 0;
   }
 }
 
@@ -1946,6 +1999,9 @@
   }
   .customerCare-info-holder {
     width: 85%;
+  }
+  .user-profile-parent {
+    padding: 3rem 1rem;
   }
 }
 
