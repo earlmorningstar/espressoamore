@@ -1298,10 +1298,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
 }
 
 #SignUp-id {
-  height: 100vh;
+  min-height: 100vh;
   padding: 3rem 5rem;
 }
 
@@ -1595,6 +1596,35 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* Modal Style Section--- */
+
+.modal-modal-title {
+  font-family: "Lato", sans-serif;
+}
+
+#modal-modal-title-id {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.modal-button {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(111, 66, 56);
+  color: rgb(205, 196, 189);
+  font-size: 16px;
+}
+
+#child-modal-title {
+  margin-bottom: 10px;
+}
+
+.child-modal-description {
+  margin-bottom: 8px;
 }
 
 /* Media Queries--- */

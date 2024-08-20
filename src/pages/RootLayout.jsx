@@ -4,12 +4,27 @@ import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
 import MainNavigation from "../components/MainNavigation";
 import SimpleDialog from "./SimpleDialog";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import "./Styles.css";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 350,
+  bgcolor: "rgb(205, 196, 189)",
+  color: "rgb(111, 66, 56)",
+  boxShadow: 24,
+  p: 4,
+};
 
 function RootLayout() {
   const likedItemCtx = useContext(LikedItemsContext);
@@ -25,6 +40,9 @@ function RootLayout() {
   const inactivityTimeoutRef = useRef(null);
   const isAutoLogout = useRef(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const pathname = useLocation();
 
   useEffect(() => {
@@ -75,9 +93,11 @@ function RootLayout() {
   };
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true");
     resetInactivityTimeout();
+    setTimeout(() => {
+      setIsLoggedIn(true);
+    }, 2000);
   };
 
   const handleLogout = () => {
@@ -86,8 +106,8 @@ function RootLayout() {
     if (isAutoLogout.current) {
       setOpenDialog(true);
       isAutoLogout.current = false;
-      }
-    navigate("/loginPage");
+    }
+    navigate("/loginPage", { replace: true });
   };
 
   const handleDropDownLogout = () => {
@@ -95,7 +115,7 @@ function RootLayout() {
     setIsLoggedIn(false);
     toggleDropdown();
     localStorage.setItem("isLoggedIn", "false");
-    navigate("/loginPage");
+    navigate("/loginPage", { replace: true });
   };
 
   const handleDialogClose = () => {
@@ -263,7 +283,7 @@ function RootLayout() {
                 </div>
 
                 <span
-                  onClick={handleDropDownLogout}
+                  onClick={handleOpen}
                   className="root-nav-dropDown"
                 >
                   Logout
@@ -274,6 +294,32 @@ function RootLayout() {
         </div>
       )}
       <SimpleDialog open={openDialog} onClose={handleDialogClose} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography className="modal-modal-title" variant="h6" component="h2">
+            Do you want logout?
+          </Typography>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
+            <button className="modal-button" onClick={handleClose}>
+              No
+            </button>
+            <button
+              className="modal-button"
+              onClick={() => {
+                handleDropDownLogout();
+                handleClose();
+              }}
+            >
+              Yes
+            </button>
+          </Box>
+        </Box>
+      </Modal>
       <main>
         <Outlet context={{ handleLoginSuccess }} />
       </main>

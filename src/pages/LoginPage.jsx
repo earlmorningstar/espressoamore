@@ -82,14 +82,19 @@ function LoginPage() {
         if (foundUser) {
           localStorage.setItem("loggedInUser", foundUser.username);
           localStorage.setItem("accountCreationDate", foundUser.createdDate);
+          localStorage.setItem("isLoggedIn", "true");
           handleLoginSuccess();
           setAlertOpen(true);
           setTimeout(() => {
+          setAlertOpen(false);
             navigate("/homepage");
-          }, 3000);
+          }, 2000);
         } else {
           setErrors({ login: "Invalid username or password." });
           setErrorAlertOpen(true);
+          setTimeout(() => {
+            setErrorAlertOpen(false);
+          }, 3000);
         }
       } catch (error) {
         console.error("Error reading user data:", error);

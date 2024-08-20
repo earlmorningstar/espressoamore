@@ -1,10 +1,26 @@
 import { useEffect, useState } from "react";
-import { FaUserAlt } from "react-icons/fa";
-import { FaCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { readUserData } from "../../dataUtils";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { FaCircle, FaUserAlt } from "react-icons/fa";
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "rgb(205, 196, 189)",
+  color: "#000000",
+  p: 3,
+};
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
+  const [openParentModal, setOpenParentModal] = useState(false);
+  const [openChildModal, setOpenChildModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -26,6 +42,24 @@ function UserProfile() {
   if (!userData) {
     return <div>Loading...</div>;
   }
+
+  const handleParentModalOpen = () => setOpenParentModal(true);
+  const handleParentModalClose = () => setOpenParentModal(false);
+
+  const handleChildModalOpen = () => {
+    setOpenChildModal(true);
+    handleParentModalClose();
+  };
+  const handleChildModalClose = () => {
+    setOpenChildModal(false);
+    handleParentModalClose();
+  };
+
+  // const handleAccountDeletion = () => {
+  //   localStorage.removeItem("loggedInUser");
+  //   localStorage.removeItem("accountCreationDate");
+  //   navigate("/SignUpPage");
+  // };
 
   return (
     <div className="user-profile-parent">
@@ -57,9 +91,69 @@ function UserProfile() {
             <h4>Mobile:</h4>
             <p>{userData.mobile}</p>
           </span>
-          <button className="user-info-btn">Delete my account</button>
+          <button className="user-info-btn" onClick={handleParentModalOpen}>
+            Delete my account
+          </button>
         </div>
       </div>
+
+      <Modal
+        open={openParentModal}
+        onClose={handleParentModalClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box className="modal-modal-title" sx={modalStyle}>
+          <h2 id="parent-modal-title">Do you want to delete your account?</h2>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
+            <button className="modal-button" onClick={handleParentModalClose}>
+              No
+            </button>
+            <button className="modal-button" onClick={handleChildModalOpen}>
+              Yes
+            </button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openChildModal}
+        onClose={handleChildModalClose}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box className="modal-modal-title" sx={{ ...modalStyle, width: 400 }}>
+          <h2 id="child-modal-title">Permanent Removal Warning</h2>
+          <p className="child-modal-description">
+            1. <b>Permanent Removal:</b> Deleting your account will result in
+            the permanent removal of all your account details and associated
+            information from our system.
+          </p>
+          <p className="child-modal-description">
+            2. <b>Data Erasure:</b> All personal data, including your profile
+            information, purchase history, and any saved preferences, will be
+            erased and cannot be recovered.
+          </p>
+          <p className="child-modal-description">
+            3. <b>Irreversible Action:</b> Once your account is deleted, this
+            action cannot be undone. You will lose access to any services or
+            features linked to your account.
+          </p>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
+            <button className="modal-button" onClick={handleChildModalClose}>
+              Abort
+            </button>
+            <button
+              className="modal-button"
+              // onClick={() => {
+              //   handleAccountDeletion();
+              // }}
+            >
+              Proceed
+            </button>
+          </Box>
+        </Box>
+      </Modal>
 
       <div className="user-profile-info-part-ii">
         <div className="completion-holder">
