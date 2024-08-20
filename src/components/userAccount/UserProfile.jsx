@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { readUserData } from "../../dataUtils";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -20,6 +20,7 @@ function UserProfile() {
   const [userData, setUserData] = useState(null);
   const [openParentModal, setOpenParentModal] = useState(false);
   const [openChildModal, setOpenChildModal] = useState(false);
+  const { handleLogout } = useOutletContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +40,23 @@ function UserProfile() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const saveUserData = localStorage.getItem("users");
+    if (saveUserData) {
+      setUserData(JSON.parse(saveUserData));
+    }
+  }, []);
+
+  const handleDeleteAccount = () => {
+    localStorage.removeItem("users");
+    localStorage.setItem("isLoggedIn", "false");
+    handleLogout();
+  };
+
+  const handleShopNow = () => {
+    navigate("/purchasePage");
+  };
+
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -54,12 +72,6 @@ function UserProfile() {
     setOpenChildModal(false);
     handleParentModalClose();
   };
-
-  // const handleAccountDeletion = () => {
-  //   localStorage.removeItem("loggedInUser");
-  //   localStorage.removeItem("accountCreationDate");
-  //   navigate("/SignUpPage");
-  // };
 
   return (
     <div className="user-profile-parent">
@@ -145,9 +157,10 @@ function UserProfile() {
             </button>
             <button
               className="modal-button"
-              // onClick={() => {
-              //   handleAccountDeletion();
-              // }}
+              onClick={() => {
+                handleDeleteAccount();
+                handleChildModalClose();
+              }}
             >
               Proceed
             </button>
@@ -170,7 +183,9 @@ function UserProfile() {
         <div className="user-notice">
           <p>You should note...</p>
           <h3>You have no pending order at the moment.</h3>
-          <button className="user-info-btn">Make an order</button>
+          <button onClick={handleShopNow} className="user-info-btn">
+            Make an order
+          </button>
         </div>
 
         <div className="status-dateCreated-holder">
@@ -181,7 +196,7 @@ function UserProfile() {
             </p>
           </div>
           <div>
-            <span>Created</span>
+            <span>Account Created</span>
             <p>
               {localStorage.getItem("accountCreationDate") || "No date stored."}
             </p>

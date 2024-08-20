@@ -321,7 +321,7 @@ function RootLayout() {
         </Box>
       </Modal>
       <main>
-        <Outlet context={{ handleLoginSuccess }} />
+        <Outlet context={{ handleLoginSuccess, handleLogout }} />
       </main>
     </>
   );
