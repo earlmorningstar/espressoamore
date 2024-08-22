@@ -326,8 +326,19 @@
 .cart-num {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 1px;
   text-decoration: none;
+}
+
+.cart-num > sup {
+  border: none;
+  padding: 1.5px 5px;
+  border-radius: 50px;
+  background-color: red;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 15px;
 }
 
 /* Cart Summary--- */
@@ -935,6 +946,11 @@
   justify-content: center;
   height: 100vh;
   width: 100%;
+}
+
+#feat-loader-parent-id {
+  background-color: rgb(48, 31, 21);
+  height: 20vh;
 }
 
 #wel-loader {

@@ -173,7 +173,6 @@ function RootLayout() {
             Contact Us
           </NavLink>
         </div>
-
         <div className="hamburger-menu" onClick={toggleDropdown}>
           {isDropdownOpen ? (
             <RiCloseLargeFill size={32} color="rgb(205, 196, 189)" />
@@ -257,7 +256,7 @@ function RootLayout() {
                   >
                     Favorites{" "}
                     <span className="cart-num">
-                      <FaHeart size={20} /> <p>'{totalLikedItems}'</p>
+                      <FaHeart size={20} /> <sup>{totalLikedItems}</sup>
                     </span>
                   </NavLink>
 
@@ -269,7 +268,7 @@ function RootLayout() {
                     My Cart{" "}
                     <span className="cart-num">
                       <PiShoppingCartFill color="rgb(48, 31, 21)" size={25} />{" "}
-                      <p>'{totalCartItems}'</p>
+                      <sup>{totalCartItems}</sup>
                     </span>
                   </NavLink>
 

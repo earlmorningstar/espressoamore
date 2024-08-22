@@ -63,7 +63,7 @@ function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
               >
                 <span className="cart-num">
                   <FaHeart size={16} />
-                  <p>'{totalLikedItems}'</p>
+                  <sup>{totalLikedItems}</sup>
                 </span>
               </NavLink>
               <NavLink
@@ -72,7 +72,7 @@ function MainNavigation({ title, children, isLoggedIn, handleLogout }) {
               >
                 <span className="cart-num">
                   <PiShoppingCartFill color="rgb(205, 196, 189)" size={20} />
-                  <p>'{totalCartItems}'</p>
+                  <sup>{totalCartItems}</sup>
                 </span>
               </NavLink>
               <NavLink to='/userProfilePage' className="cart-profile-icon-nav-parent">

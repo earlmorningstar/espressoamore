@@ -3,6 +3,7 @@ import CartContext from "../store/CartContext";
 import { NavLink } from "react-router-dom";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { currencyFormatter } from "../Util/formatter";
+import { PropagateLoader } from "react-spinners";
 import "./Styles.css";
 
 const imageList = [
@@ -33,6 +34,7 @@ function FeaturedProducts() {
 
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [coffeeData, setCoffeeData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const fetchCoffeeData = async () => {
@@ -43,6 +45,8 @@ function FeaturedProducts() {
     } catch (error) {
       console.error("Error fetching coffee data:", error);
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,6 +91,20 @@ function FeaturedProducts() {
     return cartCtx.items.some((item) => item.id === coffeeId);
   };
 
+  if (loading) {
+    return (
+      <div className="loader-parent" id="feat-loader-parent-id">
+        <PropagateLoader
+          height={30}
+          margin={8}
+          radius={5}
+          speedMultiplier={1}
+          color="rgb(219, 188, 160)"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="featuredProduct-container">
       <h2>Our Featured Products</h2>
@@ -117,8 +135,8 @@ function FeaturedProducts() {
               <div className="featured-prod-info">
                 <h2>{coffee.name}</h2>
                 <p>
-                  {coffee.description.substring(0, 70)}
-                  {coffee.description.length > 70 ? "..." : ""}
+                  {coffee.description.substring(0, 60)}
+                  {coffee.description.length > 60 ? "..." : ""}
                 </p>
                 <p>
                   Price: <b>{currencyFormatter.format(coffee.price)}</b>
