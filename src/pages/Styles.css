@@ -331,14 +331,16 @@
 }
 
 .cart-num > sup {
+  font-family: "Manrope", sans-serif;
+  position: relative;
   border: none;
-  padding: 1.5px 5px;
-  border-radius: 50px;
+  padding: 1px 4px;
+  border-radius: 50%;
   background-color: red;
   color: #ffffff;
   margin-bottom: 15px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 11px;
 }
 
 /* Cart Summary--- */
