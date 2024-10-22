@@ -111,7 +111,7 @@ function LoginPage() {
     return (
       <div className="loader-parent-ii">
         <FadeLoader
-          height={25}
+          height={20}
           margin={8}
           radius={5}
           speedMultiplier={2}

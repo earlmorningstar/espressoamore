@@ -965,6 +965,7 @@
   background-color: rgb(219, 188, 160);
   color: rgb(48, 31, 21);
   padding: 2rem 5rem 4rem 5rem;
+  height: 100%;
 }
 
 .purchasePage-parent > h3 {
@@ -1085,6 +1086,7 @@
   background-color: rgb(219, 188, 160);
   color: rgb(48, 31, 21);
   padding: 2rem 5rem 4rem 5rem;
+  height: 100vh;
 }
 
 .purchaseDetail-info {
@@ -1253,6 +1255,11 @@
   background-color: #cdc4bd;
   color: rgb(48, 31, 21);
   padding: 3rem 5rem;
+  height: 100%;
+}
+
+#privacy-policy-id {
+  height: 100vh;
 }
 
 .termsOfUse-parent > h2 {

@@ -165,19 +165,19 @@ function SignUp() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="loader-parent-ii">
-        <FadeLoader
-          height={25}
-          margin={8}
-          radius={5}
-          speedMultiplier={2}
-          color="rgb(48, 31, 21)"
-        />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="loader-parent-ii">
+  //       <FadeLoader
+  //         height={20}
+  //         margin={8}
+  //         radius={5}
+  //         speedMultiplier={2}
+  //         color="rgb(48, 31, 21)"
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="SignUp-parent">

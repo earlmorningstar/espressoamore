@@ -8,7 +8,7 @@ function PrivacyPolicy() {
   };
 
   return (
-    <div className="termsOfUse-parent">
+    <div className="termsOfUse-parent" id="privacy-policy-id">
       <h2>Privacy Policy</h2>
       <h3>Privacy Policy for Espresso Amore</h3>
 
