@@ -110,8 +110,7 @@ function TermsOfUse() {
           Our website may contain links to third-party websites. These links are
           provided for your convenience only. We do not endorse or make any
           representations about third-party websites, and we are not responsible
-          for their content or practices. If you access any third-party website
-          linked from our website, you do so at your own risk.
+          for their content or practices. 
         </h4>
       </span>
 
