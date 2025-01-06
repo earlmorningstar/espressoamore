@@ -53,7 +53,9 @@ function CartSummary() {
             {cartCtx.items.map((item) => (
               <motion.li variants={gridSquareVariants} key={item.id} className="summary-list-item">
                 <h3>{item.name}</h3>
+                <span>
                 <img src={`/images/pur${item.id}.jpg`} alt={item.name} width="100" />
+                </span>
                 <div>
                   <p>Quantity: x{item.quantity}</p>
                   <p>Price: {currencyFormatter.format(item.price * item.quantity)}</p>

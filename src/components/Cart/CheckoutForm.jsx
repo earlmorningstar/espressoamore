@@ -70,7 +70,7 @@ function CheckoutForm({ onSubmit }) {
         tempErrors[name] = value
           ? /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(value)
             ? ""
-            : "Expiry date is not valid."
+            : "Expired Card."
           : "This field is required.";
         break;
       case "cvv":
