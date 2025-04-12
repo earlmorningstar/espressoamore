@@ -36,7 +36,7 @@ function PurchaseDetailPage() {
   }
 
   if (!coffee) {
-    return <div>Coffee not found</div>; //Work on this!
+    return <div>Coffee not found</div>;
   }
 
   const isItemInCart = (coffeeId) => {

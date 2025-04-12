@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GiCoffeeCup } from "react-icons/gi";
 import { LuAsterisk } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { readUserData, saveUserData } from "../dataUtils";
-import { FadeLoader } from "react-spinners";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
@@ -13,7 +12,6 @@ import "./Styles.css";
 
 function SignUp() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({});
   const [alertOpen, setAlertOpen] = useState(false);
   const handleTermsOfUsePage = () => navigate("/termsOfUsePage");
@@ -110,14 +108,6 @@ function SignUp() {
     navigate("/loginPage");
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -130,9 +120,13 @@ function SignUp() {
     e.preventDefault();
     if (validateForm()) {
       const existingUsers = await readUserData();
-      const isDuplicateUsername = existingUsers.some(user => user.username === formData.username);
-      const isDuplicateEmail = existingUsers.some(user => user.email === formData.email);
-  
+      const isDuplicateUsername = existingUsers.some(
+        (user) => user.username === formData.username
+      );
+      const isDuplicateEmail = existingUsers.some(
+        (user) => user.email === formData.email
+      );
+
       if (isDuplicateUsername || isDuplicateEmail) {
         setErrors({
           username: isDuplicateUsername ? "Username already taken." : "",
@@ -153,7 +147,7 @@ function SignUp() {
         password: formData.password,
         createdDate: currentDate,
       };
-      
+
       await saveUserData([...existingUsers, newUser]);
       setAlertOpen(true);
       setTimeout(() => {
@@ -164,20 +158,6 @@ function SignUp() {
       console.log("Validation Errors:", errors);
     }
   };
-
-  // if (loading) {
-  //   return (
-  //     <div className="loader-parent-ii">
-  //       <FadeLoader
-  //         height={20}
-  //         margin={8}
-  //         radius={5}
-  //         speedMultiplier={2}
-  //         color="rgb(48, 31, 21)"
-  //       />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="SignUp-parent">
@@ -195,8 +175,7 @@ function SignUp() {
         <h2>Create an account:</h2>
 
         <form className="SignUp-form" onSubmit={handleSubmit}>
-        
-        <div className="input-group">
+          <div className="input-group">
             <label htmlFor="firstname">
               First Name
               <LuAsterisk color="red" size={10} />
@@ -296,7 +275,9 @@ function SignUp() {
               onBlur={(e) => validateField(e.target.name, e.target.value)}
               required
             />
-            {errors.mobile && <p className="validation-error">{errors.mobile}</p>}
+            {errors.mobile && (
+              <p className="validation-error">{errors.mobile}</p>
+            )}
           </div>
           <div className="input-group">
             <label htmlFor="password">

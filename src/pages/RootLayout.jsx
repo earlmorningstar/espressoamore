@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import LikedItemsContext from "../store/LikedItemsContext";
 import CartContext from "../store/CartContext";
@@ -14,7 +14,16 @@ import { FaHeart } from "react-icons/fa";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 
-const style = {
+const INACTIVITY_TIMEOUT = 900000;
+const NAV_ITEMS = [
+  { path: "/homePage", label: "Home" },
+  { path: "/purchasePage", label: "Purchase", end: true },
+  { path: "/features", label: "Features", end: true },
+  { path: "/aboutUs", label: "About", end: true },
+  { path: "/contactPage", label: "Contact Us", end: true },
+];
+
+const MODAL_STYLE = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -26,31 +35,233 @@ const style = {
   p: 4,
 };
 
-function RootLayout() {
-  const likedItemCtx = useContext(LikedItemsContext);
-  const cartCtx = useContext(CartContext);
-  const uniqueLikedItems = new Set(likedItemCtx.items.map((item) => item.id));
-  const totalLikedItems = uniqueLikedItems.size;
-  const uniqueCartItems = new Set(cartCtx.items.map((item) => item.id));
-  const totalCartItems = uniqueCartItems.size;
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+//custom hook for authentication
+function useAuthentication() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const inactivityTimeoutRef = useRef(null);
   const isAutoLogout = useRef(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const pathname = useLocation();
+  const [openAutoLogoutDialog, setOpenAutoLogoutDialog] = useState(false);
+
+  const handleLogout = useCallback(() => {
+    setIsLoggedIn(false);
+    localStorage.setItem("isLoggedIn", "false");
+
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+      inactivityTimeoutRef.current = null;
+    }
+
+    if (isAutoLogout.current) {
+      setOpenAutoLogoutDialog(true);
+      isAutoLogout.current = false;
+    }
+
+    navigate("/loginPage", { replace: true });
+  }, [navigate]);
+
+  const startInactivityTimeout = useCallback(() => {
+    inactivityTimeoutRef.current = setTimeout(() => {
+      isAutoLogout.current = true;
+      handleLogout();
+    }, INACTIVITY_TIMEOUT);
+  }, [handleLogout]);
+
+  const resetInactivityTimeout = useCallback(() => {
+    if (!isLoggedIn) return;
+
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    startInactivityTimeout();
+  }, [isLoggedIn, startInactivityTimeout]);
 
   useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+
+    if (loggedIn) {
+      startInactivityTimeout();
+    }
+
+    const events = ["mousemove", "keypress", "click"];
+
+    events.forEach((event) =>
+      window.addEventListener(event, resetInactivityTimeout)
+    );
+
+    return () => {
+      events.forEach((event) =>
+        window.removeEventListener(event, resetInactivityTimeout)
+      );
+
+      if (inactivityTimeoutRef.current) {
+        clearTimeout(inactivityTimeoutRef.current);
+      }
+    };
+  }, [resetInactivityTimeout, startInactivityTimeout]);
+
+  const handleLoginSuccess = () => {
+    localStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+    startInactivityTimeout();
+  };
+
+  const closeAutoLogoutDialog = () => {
+    setOpenAutoLogoutDialog(false);
+  };
+
+  return {
+    isLoggedIn,
+    handleLoginSuccess,
+    handleLogout,
+    openAutoLogoutDialog,
+    closeAutoLogoutDialog,
+  };
+}
+
+//navigation components
+function NavigationLinks({
+  isLoggedIn,
+  toggleDropdown = null,
+  mobile = false,
+}) {
+  const className = mobile ? "root-nav-dropDown" : "root-nav";
+
+  return NAV_ITEMS.map((item) => (
+    <NavLink
+      key={item.path}
+      to={item.path}
+      className={`${className} ${isLoggedIn ? "show" : "hide"}`}
+      onClick={toggleDropdown}
+      end={item.end}
+    >
+      {item.label}
+    </NavLink>
+  ));
+}
+
+function IconLink({ to, label, icon, count, onClick }) {
+  return (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className="cart-profile-icon-navlink-parent"
+    >
+      {label}{" "}
+      <span className="cart-num">
+        {icon} <sup>{count}</sup>
+      </span>
+    </NavLink>
+  );
+}
+
+function MobileMenu({
+  isLoggedIn,
+  isOpen,
+  toggleDropdown,
+  handleLogInPage,
+  handleSignUpPage,
+  handleOpenLogoutModal,
+  totalLikedItems,
+  totalCartItems,
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="dropdown-menu">
+      <div className="nav-link-dropDown">
+        <NavigationLinks
+          isLoggedIn={isLoggedIn}
+          toggleDropdown={toggleDropdown}
+          mobile={true}
+        />
+
+        {!isLoggedIn && (
+          <>
+            <span
+              onClick={handleLogInPage}
+              id="hideBtnOnIsLoginTrue"
+              className="root-nav-dropDown"
+            >
+              Log In
+            </span>
+            <span
+              onClick={handleSignUpPage}
+              id="hideBtnOnIsLoginTrue"
+              className="root-nav-dropDown"
+            >
+              Sign Up
+            </span>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <>
+            <div className="root-nav-cart-profile-icon-parent">
+              <IconLink
+                to="/favoritedItemsPage"
+                label="Favorites"
+                icon={<FaHeart size={20} />}
+                count={totalLikedItems}
+                onClick={toggleDropdown}
+              />
+
+              <IconLink
+                to="/cartItemsPage"
+                label="My Cart"
+                icon={<PiShoppingCartFill color="rgb(48, 31, 21)" size={25} />}
+                count={totalCartItems}
+                onClick={toggleDropdown}
+              />
+
+              <IconLink
+                to="/userProfilePage"
+                label="My Profile"
+                icon={<CgProfile color="rgb(48, 31, 21)" size={25} />}
+                onClick={toggleDropdown}
+              />
+            </div>
+
+            <span onClick={handleOpenLogoutModal} className="root-nav-dropDown">
+              Logout
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RootLayout() {
+  const likedItemCtx = useContext(LikedItemsContext);
+  const cartCtx = useContext(CartContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    isLoggedIn,
+    handleLoginSuccess,
+    handleLogout,
+    openAutoLogoutDialog,
+    closeAutoLogoutDialog,
+  } = useAuthentication();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [openLogoutModal, setOpenLogoutModal] = useState(false);
+
+  //count unique items
+  const totalLikedItems = new Set(likedItemCtx.items.map((item) => item.id))
+    .size;
+  const totalCartItems = new Set(cartCtx.items.map((item) => item.id)).size;
+
+  //scroll to top on route change
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [location]);
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((prev) => !prev);
   };
 
   const handleLogInPage = () => {
@@ -63,63 +274,13 @@ function RootLayout() {
     navigate("/signUpPage");
   };
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(loggedIn === "true");
+  const handleOpenLogoutModal = () => setOpenLogoutModal(true);
+  const handleCloseLogoutModal = () => setOpenLogoutModal(false);
 
-    window.addEventListener("mousemove", resetInactivityTimeout);
-    window.addEventListener("keypress", resetInactivityTimeout);
-    window.addEventListener("click", resetInactivityTimeout);
-
-    return () => {
-      window.removeEventListener("mousemove", resetInactivityTimeout);
-      window.removeEventListener("keypress", resetInactivityTimeout);
-      window.removeEventListener("click", resetInactivityTimeout);
-    };
-  }, []);
-
-  const startInactivityTimeout = () => {
-    inactivityTimeoutRef.current = setTimeout(() => {
-      isAutoLogout.current = true;
-      handleLogout();
-    }, 900000);
-  };
-
-  const resetInactivityTimeout = () => {
-    if (inactivityTimeoutRef.current) {
-      clearTimeout(inactivityTimeoutRef.current);
-    }
-    startInactivityTimeout();
-  };
-
-  const handleLoginSuccess = () => {
-    localStorage.setItem("isLoggedIn", "true");
-    resetInactivityTimeout();
-    setTimeout(() => {
-      setIsLoggedIn(true);
-    }, 2000);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem("isLoggedIn", "false");
-    if (isAutoLogout.current) {
-      setOpenDialog(true);
-      isAutoLogout.current = false;
-    }
-    navigate("/loginPage", { replace: true });
-  };
-
-  const handleDropDownLogout = () => {
-    isAutoLogout.current = false;
-    setIsLoggedIn(false);
-    toggleDropdown();
-    localStorage.setItem("isLoggedIn", "false");
-    navigate("/loginPage", { replace: true });
-  };
-
-  const handleDialogClose = () => {
-    setOpenDialog(false);
+  const handleConfirmLogout = () => {
+    handleLogout();
+    setIsDropdownOpen(false);
+    handleCloseLogoutModal();
   };
 
   return (
@@ -133,46 +294,9 @@ function RootLayout() {
           className={`nav-links ${isLoggedIn ? "show" : "hide"}`}
           id="root-nav-id"
         >
-          <NavLink
-            to="/homePage"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/purchasePage"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-            end
-          >
-            Purchase
-          </NavLink>
-          <NavLink
-            to="/features"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-            end
-          >
-            Features
-          </NavLink>
-          <NavLink
-            to="/aboutUs"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-            end
-          >
-            About
-          </NavLink>
-          <NavLink
-            to="/contactPage"
-            className={`root-nav ${isLoggedIn ? "show" : "hide"}`}
-            activeClassName="active"
-            end
-          >
-            Contact Us
-          </NavLink>
+          <NavigationLinks isLoggedIn={isLoggedIn} />
         </div>
+
         <div className="hamburger-menu" onClick={toggleDropdown}>
           {isDropdownOpen ? (
             <RiCloseLargeFill size={32} color="rgb(205, 196, 189)" />
@@ -181,144 +305,45 @@ function RootLayout() {
           )}
         </div>
       </MainNavigation>
-      {isDropdownOpen && (
-        <div className="dropdown-menu">
-          <div className="nav-link-dropDown">
-            <NavLink
-              to="/homePage"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/purchasePage"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-              end
-            >
-              Purchase
-            </NavLink>
-            <NavLink
-              to="/features"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-              end
-            >
-              Features
-            </NavLink>
-            <NavLink
-              to="/aboutUs"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-              end
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/contactPage"
-              className={`root-nav-dropDown ${isLoggedIn ? "show" : "hide"}`}
-              id="root-nav-id"
-              onClick={toggleDropdown}
-              end
-            >
-              Contact Us
-            </NavLink>
-            {!isLoggedIn && (
-              <>
-                <span
-                  onClick={handleLogInPage}
-                  id="hideBtnOnIsLoginTrue"
-                  className="root-nav-dropDown"
-                >
-                  Log In
-                </span>
-                <span
-                  onClick={handleSignUpPage}
-                  id="hideBtnOnIsLoginTrue"
-                  className="root-nav-dropDown"
-                >
-                  Sign Up
-                </span>
-              </>
-            )}
-            {isLoggedIn && (
-              <>
-                <div className="root-nav-cart-profile-icon-parent">
-                  <NavLink
-                    to="/favoritedItemsPage"
-                    onClick={toggleDropdown}
-                    className="cart-profile-icon-navlink-parent"
-                  >
-                    Favorites{" "}
-                    <span className="cart-num">
-                      <FaHeart size={20} /> <sup>{totalLikedItems}</sup>
-                    </span>
-                  </NavLink>
 
-                  <NavLink
-                    to="/cartItemsPage"
-                    onClick={toggleDropdown}
-                    className="cart-profile-icon-navlink-parent"
-                  >
-                    My Cart{" "}
-                    <span className="cart-num">
-                      <PiShoppingCartFill color="rgb(48, 31, 21)" size={25} />{" "}
-                      <sup>{totalCartItems}</sup>
-                    </span>
-                  </NavLink>
+      <MobileMenu
+        isLoggedIn={isLoggedIn}
+        isOpen={isDropdownOpen}
+        toggleDropdown={toggleDropdown}
+        handleLogInPage={handleLogInPage}
+        handleSignUpPage={handleSignUpPage}
+        handleOpenLogoutModal={handleOpenLogoutModal}
+        totalLikedItems={totalLikedItems}
+        totalCartItems={totalCartItems}
+      />
 
-                  <NavLink
-                    to="/userProfilePage"
-                    onClick={toggleDropdown}
-                    className="cart-profile-icon-navlink-parent"
-                  >
-                    My Profile <CgProfile color="rgb(48, 31, 21)" size={25} />
-                  </NavLink>
-                </div>
+      {/* Auto logout dialog */}
+      <SimpleDialog
+        open={openAutoLogoutDialog}
+        onClose={closeAutoLogoutDialog}
+      />
 
-                <span
-                  onClick={handleOpen}
-                  className="root-nav-dropDown"
-                >
-                  Logout
-                </span>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-      <SimpleDialog open={openDialog} onClose={handleDialogClose} />
+      {/* Logout confirmation modal */}
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openLogoutModal}
+        onClose={handleCloseLogoutModal}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={MODAL_STYLE}>
           <Typography className="modal-modal-title" variant="h6" component="h2">
             Do you want logout?
           </Typography>
           <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
-            <button className="modal-button" onClick={handleClose}>
+            <button className="modal-button" onClick={handleCloseLogoutModal}>
               No
             </button>
-            <button
-              className="modal-button"
-              onClick={() => {
-                handleDropDownLogout();
-                handleClose();
-              }}
-            >
+            <button className="modal-button" onClick={handleConfirmLogout}>
               Yes
             </button>
           </Box>
         </Box>
       </Modal>
+
       <main>
         <Outlet context={{ handleLoginSuccess, handleLogout }} />
       </main>

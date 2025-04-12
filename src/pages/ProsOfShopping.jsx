@@ -7,8 +7,41 @@ import { GrSelect } from "react-icons/gr";
 import { motion } from "framer-motion";
 import "./Styles.css";
 
+const SHOPPING_BENEFITS = [
+  {
+    icon: LiaShippingFastSolid,
+    title: "No-cost delivery",
+    description: "Free shipping for orders above $600"
+  },
+  {
+    icon: IoGiftOutline,
+    title: "Daily Deals",
+    description: "Enjoy savings of up to 25% off"
+  },
+  {
+    icon: BiSupport,
+    title: "Assistance available round the clock",
+    description: "Purchase guided by a specialist"
+  },
+  {
+    icon: PiPercent,
+    title: "Budget-friendly cost",
+    description: "Obtain pricing directly from the factory"
+  },
+  {
+    icon: GrSelect,
+    title: "Pick products",
+    description: "Unmatched variety"
+  },
+  {
+    icon: RiSecurePaymentLine,
+    title: "Secure Payments",
+    description: "Fully safeguarded transactions"
+  }
+];
 
-const gridContainerVariants = {
+const animations = {
+  container: {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -16,80 +49,43 @@ const gridContainerVariants = {
         staggerChildren: 0.25,
       },
     },
-  };
-  
-  const gridSquareVariants = {
+  },
+  item: {
     hidden: { opacity: 0 },
     show: { opacity: 1 },
-  };
+  }
+};
 
+function BenefitItem({ icon: Icon, title, description }) {
+  return (
+    <motion.div variants={animations.item} className="each-pros">
+      <span>
+        <Icon size={20} />
+      </span>
+      <span className="pros-info">
+        <h3>{title}</h3>
+        <h4>{description}</h4>
+      </span>
+    </motion.div>
+  );
+}
 
 function ProsOfShopping() {
   return (
     <motion.div 
-    variants={gridContainerVariants}
-    initial="hidden"
-    animate="show" 
-    className="pros-parent">
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <LiaShippingFastSolid size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>No-cost delivery</h3>
-          <h4>Free shipping for orders above $600</h4>
-        </span>
-      </motion.div>
-
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <IoGiftOutline size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>Daily Deals</h3>
-          <h4>Enjoy savings of up to 25% off</h4>
-        </span>
-      </motion.div>
-
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <BiSupport size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>Assistance available round the clock</h3>
-          <h4>Purchase guided by a specialist</h4>
-        </span>
-      </motion.div>
-
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <PiPercent size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>Budget-friendly cost</h3>
-          <h4>Obtain pricing directly from the factory</h4>
-        </span>
-      </motion.div>
-
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <GrSelect size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>Pick products</h3>
-          <h4>Unmatched variety</h4>
-        </span>
-      </motion.div>
-
-      <motion.div variants={gridSquareVariants} className="each-pros">
-        <span>
-          <RiSecurePaymentLine size={20} />
-        </span>
-        <span className="pros-info">
-          <h3>Secure Payments</h3>
-          <h4>Fully safeguarded transactions</h4>
-        </span>
-      </motion.div>
+      variants={animations.container}
+      initial="hidden"
+      animate="show" 
+      className="pros-parent"
+    >
+      {SHOPPING_BENEFITS.map((benefit, index) => (
+        <BenefitItem 
+          key={index}
+          icon={benefit.icon} 
+          title={benefit.title} 
+          description={benefit.description} 
+        />
+      ))}
     </motion.div>
   );
 }
